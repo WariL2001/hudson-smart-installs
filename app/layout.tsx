@@ -1,3 +1,5 @@
+import Link from "next/link";
+import Image from "next/image";
 import "./globals.css";
 import type { Metadata } from "next";
 
@@ -20,32 +22,38 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="skip-link">Skip to content</a>
 
         <header className="sticky top-0 z-50 bg-brand-navy/70 backdrop-blur border-b border-white/10">
-          <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-6">
-            <a href="/" className="group inline-flex items-center gap-3" aria-label="Hudson Smart Installs home">
-              <img src="/logohsi.png" alt="Hudson Smart Installs logo" className="h-10 w-auto transition-transform group-hover:scale-105" />
-              <span className="sr-only">Hudson Smart Installs</span>
-            </a>
+  <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-6">
+    <Link href="/" className="flex items-center gap-2" aria-label="Hudson Smart Installs — Home">
+      <Image
+        src="/logohsi.svg"
+        alt="Hudson Smart Installs"
+        width={160}
+        height={40}
+        priority
+        className="h-6 md:h-8 w-auto"
+      />
+    </Link>
 
-            <nav className="ml-auto hidden md:flex gap-6 text-sm">
-              {[
-                ["#networking", "Networking & Cabling"],
-                ["#smart-tech", "Smart Home & Office"],
-                ["#it-support", "IT Support"],
-                ["#custom", "Custom Installs"],
-                ["#areas", "Service Areas"],
-                ["#contact", "Contact"],
-              ].map(([href, label]) => (
-                <a key={href} href={href} className="hover:text-brand-orange focus-visible:text-brand-orange">
-                  {label}
-                </a>
-              ))}
-            </nav>
+    <nav className="ml-auto hidden md:flex gap-6 text-sm">
+      {[
+        ["#networking", "Networking & Cabling"],
+        ["#smart-tech", "Smart Home & Office"],
+        ["#it-support", "IT Support"],
+        ["#custom", "Custom Installs"],
+        ["#areas", "Service Areas"],
+        ["#contact", "Contact"],
+      ].map(([href, label]) => (
+        <a key={href} href={href} className="hover:text-brand-orange focus-visible:text-brand-orange">
+          {label}
+        </a>
+      ))}
+    </nav>
 
-            <div className="hidden md:flex items-center gap-2">
-              <a href="#contact" className="btn btn-primary">Book Now</a>
-            </div>
-          </div>
-        </header>
+    <div className="hidden md:flex items-center gap-2">
+      <a href="#contact" className="btn btn-primary">Book Now</a>
+    </div>
+  </div>
+</header>
 
         <main id="main">{children}</main>
 
@@ -54,9 +62,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="font-semibold">© {new Date().getFullYear()} Hudson Smart Installs</div>
             <div className="opacity-80">North Jersey • Bilingual (EN/ES)</div>
             <div className="md:ml-auto flex gap-4">
-              <a href="#" className="hover:text-brand-orange">Privacy</a>
-              <a href="#" className="hover:text-brand-orange">Terms</a>
-            </div>
+  <Link href="/privacy" className="hover:text-brand-orange">Privacy</Link>
+  <Link href="/terms" className="hover:text-brand-orange">Terms</Link>
+</div>
+
           </div>
         </footer>
       </body>
