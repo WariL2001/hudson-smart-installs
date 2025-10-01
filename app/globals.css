@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ===== Brand tokens (Tailwind v4) ===== */
+@theme {
+  --color-brand-navy:   #0D1B2A;
+  --color-brand-orange: #FF7A00;
+  --color-brand-cream:  #FFF7EB;
+
+  /* optional neutrals tuned for accessibility on brand surfaces */
+  --color-ink-900: #0b1320;   /* headings on light */
+  --color-ink-700: #243447;   /* body on light */
+  --color-ink-500: #516173;   /* secondary text on light */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ===== Base resets & helpers ===== */
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
+
+/* Visible focus for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--color-brand-orange);
+  outline-offset: 2px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Motion respect */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none!important; transition: none!important; scroll-behavior: auto!important; }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Skip link */
+.skip-link {
+  position: absolute; left: 0; top: -40px;
+  background: var(--color-brand-orange); color: white;
+  padding: .5rem .75rem; border-radius: .5rem;
+}
+.skip-link:focus-visible { top: .5rem; left: .5rem; z-index: 50; }
+
+/* Card surface – readable on gradient */
+.card-surface {
+  @apply bg-white/90 backdrop-blur-sm shadow-sm rounded-2xl border border-brand-navy/10;
+}
+
+/* Primary/Secondary buttons */
+.btn {
+  @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-semibold select-none;
+}
+.btn-primary {
+  @apply bg-brand-orange text-white hover:opacity-90 active:opacity-100;
+}
+.btn-ghost {
+  @apply border border-white/30 text-white hover:bg-white/10;
+}
+.btn-outline-dark {
+  @apply border border-brand-navy/20 text-brand-navy hover:bg-brand-cream;
 }
