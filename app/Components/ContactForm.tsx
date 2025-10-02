@@ -14,8 +14,8 @@ export default function ContactForm() {
     const body = {
       name: String(formData.get("name") || ""),
       email: String(formData.get("email") || ""),
-      details: String(formData.get("details") || ""), // <-- antes "message"
-      hp: String(formData.get("hp") || ""),           // honeypot (opcional)
+      details: String(formData.get("details") || ""), // <-- aquí
+      hp: String(formData.get("hp") || ""),           // si usas honeypot
     };
 
     try {
