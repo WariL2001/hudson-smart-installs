@@ -1,47 +1,56 @@
 // app/api/contact/route.ts
-export const runtime = "nodejs";
-
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { z } from "zod";
+
+export const runtime = "nodejs";
+
+const schema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  phone: z.string().optional(),
+  details: z.string().min(1),
+  hp: z.string().optional(),
+});
+
+type ContactBody = z.infer<typeof schema>;
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, message } = await req.json();
-
-    // Basic validation (keeps it simple)
-    if (!name || !email || !message) {
-      return NextResponse.json({ success: false, error: "Missing fields" }, { status: 400 });
+    const data = (await req.json().catch(() => ({}))) as Partial<ContactBody>;
+    const parsed = schema.safeParse(data);
+    if (!parsed.success || parsed.data.hp) {
+      return NextResponse.json({ ok: false }, { status: 400 });
     }
 
-    // Gmail via App Password (most reliable settings)
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true, // 465 = SSL
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT || 587),
+      secure: false,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
     });
 
-    // Gmail often requires from to be the authenticated user
     await transporter.sendMail({
-      from: `Hudson Smart Installs <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,       // you receive it
-      replyTo: `${name} <${email}>`,    // replying goes to the sender
-      subject: `New contact from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+      from: `"Contact Form" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
+      subject: `New contact from ${parsed.data.name}`,
+      replyTo: parsed.data.email,
+      text: [
+        `Name: ${parsed.data.name}`,
+        `Email: ${parsed.data.email}`,
+        `Phone: ${parsed.data.phone ?? "-"}`,
+        "",
+        parsed.data.details,
+      ].join("\n"),
     });
 
-    return NextResponse.json({ success: true });
-  } catch (err: any) {
-    // Surface the reason in your terminal so we know what failed
-    console.error("Email send failed:", {
-      code: err?.code,
-      command: err?.command,
-      response: err?.response,
-      message: err?.message,
-    });
-    return NextResponse.json({ success: false }, { status: 500 });
+    return NextResponse.json({ ok: true });
+  } catch (err) { // <— no 'any'
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("POST /api/contact error:", msg);
+    return NextResponse.json({ ok: false }, { status: 500 });
   }
 }
