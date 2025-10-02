@@ -14,7 +14,8 @@ export default function ContactForm() {
     const body = {
       name: String(formData.get("name") || ""),
       email: String(formData.get("email") || ""),
-      message: String(formData.get("message") || ""),
+      details: String(formData.get("details") || ""), // <-- antes "message"
+      hp: String(formData.get("hp") || ""),           // honeypot (opcional)
     };
 
     try {
@@ -66,18 +67,27 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm opacity-80 mb-1">
+        <label htmlFor="details" className="block text-sm opacity-80 mb-1">
           Message
         </label>
         <textarea
-          id="message"
-          name="message"
+          id="details"
+          name="details"                 // <-- antes "message"
           required
           rows={5}
           className="w-full rounded-md border border-white/20 bg-white/10 px-3 py-2 text-brand-cream placeholder-white/60 outline-none focus:ring-2 focus:ring-brand-orange"
           placeholder="Tell us what you need help with…"
         />
       </div>
+
+      {/* Honeypot invisible (opcional pero recomendado) */}
+      <input
+        type="text"
+        name="hp"
+        className="hidden"
+        tabIndex={-1}
+        autoComplete="off"
+      />
 
       <button
         type="submit"
