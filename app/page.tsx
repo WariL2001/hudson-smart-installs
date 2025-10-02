@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import ContactForm from "./Components/ContactForm";
+
 
 /**
  * North Jersey Tech — Services & Design
@@ -282,11 +284,11 @@ export default function Page() {
                 <a href="#contact" className="btn btn-primary">
                   {t("Get a Quote", "Pedir cotización")}
                 </a>
-                <a href="tel:+12015550133" className="btn btn-ghost">
+                <a href="tel:+15513429343" className="btn btn-ghost">
                   {t("Call", "Llamar")}
                 </a>
                 <a
-                  href="https://wa.me/12015550133"
+                  href="https://wa.me/15513429343"
                   className="btn btn-ghost"
                   aria-label="WhatsApp"
                 >
@@ -406,122 +408,43 @@ export default function Page() {
         </section>
 
         {/* CONTACT */}
-        <section id="contact" className="mx-auto max-w-6xl px-4 py-14">
-          <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="text-white/95">
-              <h2 className="text-2xl md:text-3xl font-extrabold">
-                {t("Get a Quote", "Pedir cotización")}
-              </h2>
-              <p className="mt-2">
-                {t(
-                  "Tell us what you need. Attach photos or a short video for a faster quote.",
-                  "Cuéntanos qué necesitas. Adjunta fotos o un video corto para cotización más rápida."
-                )}
-              </p>
-              <ul className="mt-4 space-y-1" aria-label={t("Direct contact options","Opciones de contacto directo")}>
-                <li>📞 +1 (201) 555-0133</li>
-                <li>💬 WhatsApp: wa.me/12015550133</li>
-                <li>✉️ hello@hudsonsmartinstalls.com</li>
-              </ul>
-            </div>
-
-            <form
-  className="card-surface p-6 grid gap-4 text-ink-900"
-  aria-describedby="contact-note"
-  onSubmit={submit}
+        <section
+  id="contact"
+  className="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-2 gap-12"
 >
-  {/* Honeypot anti-spam (oculto) */}
-  <input
-    aria-hidden
-    tabIndex={-1}
-    autoComplete="off"
-    className="hidden"
-    name="company"
-    value={form.hp}
-    onChange={(e) => setForm({ ...form, hp: (e.target as HTMLInputElement).value })}
-  />
+  {/* LEFT SIDE = contact details */}
+  <div className="space-y-4">
+    <h2 className="text-2xl md:text-3xl font-semibold">Contact Us</h2>
+    <p className="opacity-80">
+      📍 Serving North Jersey • Bilingual (EN/ES)
+    </p>
+    <p className="opacity-80">📞 (551) 342-9343</p>
+    <p className="opacity-80">✉️ warilojano@gmail.com</p>
 
-  {/* Live region para lectores de pantalla */}
-  <div role="status" aria-live="polite" className="sr-only">
-    {sending
-      ? t("Sending…", "Enviando…")
-      : status === "ok"
-      ? t("Sent! We'll reply soon.", "¡Enviado! Te responderemos pronto.")
-      : status === "error"
-      ? t("Something went wrong. Please try again.", "Algo salió mal. Intenta de nuevo.")
-      : ""}
-  </div>
-
-  {status === "ok" && (
-    <div className="rounded-lg border border-green-300 bg-green-50 px-3 py-2 text-sm text-green-900">
-      {t("Thanks! Your message was sent.", "¡Gracias! Tu mensaje fue enviado.")}
+    <div className="flex gap-3 mt-4">
+      <a
+        href="tel:+15513429343"
+        className="btn btn-primary"
+      >
+        Call
+      </a>
+      <a
+        href="https://wa.me/+15513429343"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="btn bg-green-600 hover:bg-green-700 text-white"
+      >
+        WhatsApp
+      </a>
     </div>
-  )}
-  {status === "error" && (
-    <div className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-900">
-      {t("We couldn't send your message. Please try again or use phone/WhatsApp.",
-         "No pudimos enviar tu mensaje. Intenta de nuevo o usa teléfono/WhatsApp.")}
-    </div>
-  )}
-
-  <div className="grid gap-1">
-    <label htmlFor="name" className="text-sm font-medium">{t("Name", "Nombre")}</label>
-    <input
-      id="name"
-      className="px-3 py-2 rounded-lg border border-brand-navy/20"
-      placeholder={t("Your name", "Tu nombre")}
-      required
-      value={form.name}
-      onChange={(e) => setForm({ ...form, name: e.currentTarget.value })}
-    />
   </div>
 
-  <div className="grid gap-1">
-    <label htmlFor="email" className="text-sm font-medium">Email</label>
-    <input
-      id="email"
-      type="email"
-      className="px-3 py-2 rounded-lg border border-brand-navy/20"
-      placeholder="you@email.com"
-      required
-      value={form.email}
-      onChange={(e) => setForm({ ...form, email: e.currentTarget.value })}
-    />
+  {/* RIGHT SIDE = form */}
+  <div>
+    <ContactForm />
   </div>
+</section>
 
-  <div className="grid gap-1">
-    <label htmlFor="phone" className="text-sm font-medium">{t("Phone", "Teléfono")}</label>
-    <input
-      id="phone"
-      className="px-3 py-2 rounded-lg border border-brand-navy/20"
-      placeholder="(201) 555-0133"
-      value={form.phone}
-      onChange={(e) => setForm({ ...form, phone: e.currentTarget.value })}
-    />
-  </div>
-
-  <div className="grid gap-1">
-    <label htmlFor="details" className="text-sm font-medium">{t("Details", "Detalles")}</label>
-    <textarea
-      id="details"
-      rows={4}
-      className="px-3 py-2 rounded-lg border border-brand-navy/20"
-      placeholder={t("Brief description…", "Descripción breve…")}
-      value={form.details}
-      onChange={(e) => setForm({ ...form, details: e.currentTarget.value })}
-    />
-  </div>
-
-  <button className="btn btn-primary disabled:opacity-60" type="submit" disabled={sending} aria-busy={sending}>
-    {sending ? t("Sending…", "Enviando…") : t("Send", "Enviar")}
-  </button>
-  <p id="contact-note" className="text-xs text-ink-500">
-    {t("Demo form wired to email.", "Formulario conectado al email.")}
-  </p>
-</form>
-
-          </div>
-        </section>
       </div>
 
       {/* JSON-LD: Service area emphasis (SEO) */}

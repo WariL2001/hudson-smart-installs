@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-6">
     <Link href="/" className="flex items-center gap-2" aria-label="Hudson Smart Installs — Home">
       <Image
-        src="/logohsi.svg"
+        src="/logohsi.png"
         alt="Hudson Smart Installs"
         width={160}
         height={40}
