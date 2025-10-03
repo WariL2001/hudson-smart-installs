@@ -63,9 +63,6 @@ export default function Page() {
 
 
 
-
-
-
   // ---------- PACKAGES (short + friendly) ----------
   const packages = [
     {
@@ -358,7 +355,8 @@ export default function Page() {
 
           <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((s) => (
-              <article key={s.id} id={s.id} className="card-surface p-6 text-ink-900">
+              <article key={s.id} id={s.id} className="card-surface p-6 text-ink-900 scroll-mt-20">
+
                 <header className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="text-lg font-bold">{s.title}</h3>
@@ -388,24 +386,34 @@ export default function Page() {
 
      
 
-        <section id="service-areas" className="pt-8">
-  <h2 className="text-2xl font-semibold mb-2">Service Areas</h2>
-  <p className="opacity-80 mb-4">
-    North Jersey — Jersey City • Hoboken • Kearny • Newark • Elizabeth • Hackensack •
-    Clifton • Union City • North Bergen • Bayonne
-  </p>
-  <ServiceAreaMap />
+        <section
+  id="contact"
+  className="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-[1fr_3fr] gap-12 scroll-mt-20"
+>
+  {/* TEXTO */}
+  <div>
+    <h2 className="text-2xl font-semibold mb-6">Service Areas</h2>
+    <ul className="space-y-3 opacity-90 text-lg">
+      <li>North Jersey</li>
+      <li>Jersey City</li>
+      <li>Hoboken</li>
+      <li>Kearny</li>
+      <li>Newark</li>
+      <li>Elizabeth</li>
+      <li>Hackensack</li>
+      <li>Clifton</li>
+      <li>Union City</li>
+      <li>North Bergen</li>
+      <li>Bayonne</li>
+    </ul>
+  </div>
+
+  {/* MAPA */}
+  <div className="h-[540px] w-full rounded-2xl overflow-hidden shadow-lg">
+    <ServiceAreaMap />
+  </div>
 </section>
 
-
-
-        {/* DISCLAIMER */}
-        <section className="mx-auto max-w-6xl px-4 mt-4 text-center text-sm opacity-70">
-  {t(
-    "We do not perform high-voltage electrical, major plumbing, or structural work.",
-    "No realizamos trabajos de electricidad de alto voltaje, plomería mayor o estructurales."
-  )}
-</section>
 
 
         {/* CONTACT */}
