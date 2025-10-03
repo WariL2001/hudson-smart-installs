@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import ContactForm from "./components/ContactForm";
-
-import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";              // 👈 primero importas dynamic
+import ContactForm from "./components/ContactForm";  // 👈 después ContactForm
 
 const ServiceAreaMap = dynamic(
-  () => import("./components/ServiceAreaMap"), // relativo al archivo
+  () => import("./components/ServiceAreaMap"),   // 👈 exacto al nombre del archivo
   { ssr: false, loading: () => <div className="h-[420px] w-full rounded-2xl bg-black/5 animate-pulse" /> }
 );
 
