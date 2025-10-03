@@ -28,9 +28,9 @@ export default function Page() {
   // ---- CONTACT FORM STATE & HANDLERS ----
   const [form, setForm] = useState({ name: "", email: "", phone: "", details: "", hp: "" });
   const [sending, setSending] = useState(false);
-  const [status, setStatus] = useState<null | "ok" | "error">(null);
+  const [_status, setStatus] = useState<null | "ok" | "error">(null);
   
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
+  async function _submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (sending) return;
     setSending(true);
@@ -383,11 +383,8 @@ export default function Page() {
         </section>
 
         {/* AREAS */}
-
-     
-
-        <section
-  id="contact"
+<section
+  id="areas"
   className="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-[1fr_3fr] gap-12 scroll-mt-20"
 >
   {/* TEXTO */}
@@ -414,29 +411,20 @@ export default function Page() {
   </div>
 </section>
 
-
-
-        {/* CONTACT */}
-        <section
+{/* CONTACT */}
+<section
   id="contact"
   className="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-2 gap-12"
 >
   {/* LEFT SIDE = contact details */}
   <div className="space-y-4">
     <h2 className="text-2xl md:text-3xl font-semibold">Contact Us</h2>
-    <p className="opacity-80">
-      📍 Serving North Jersey • Bilingual (EN/ES)
-    </p>
+    <p className="opacity-80">📍 Serving North Jersey • Bilingual (EN/ES)</p>
     <p className="opacity-80">📞 (551) 342-9343</p>
     <p className="opacity-80">✉️ warilojano@gmail.com</p>
 
     <div className="flex gap-3 mt-4">
-      <a
-        href="tel:+15513429343"
-        className="btn btn-primary"
-      >
-        Call
-      </a>
+      <a href="tel:+15513429343" className="btn btn-primary">Call</a>
       <a
         href="https://wa.me/+15513429343"
         target="_blank"
@@ -448,11 +436,12 @@ export default function Page() {
     </div>
   </div>
 
-  {/* RIGHT SIDE = form */}
+  {/* RIGHT SIDE = form (manejado internamente) */}
   <div>
     <ContactForm />
   </div>
 </section>
+
 
       </div>
 
