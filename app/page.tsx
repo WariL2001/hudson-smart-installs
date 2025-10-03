@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import ContactForm from "./components/ContactForm"; // 👈 minúsculas
+import ContactForm from "./components/ContactForm";
 
 import dynamic from "next/dynamic";
 
 const ServiceAreaMap = dynamic(
-  () => import("@/app/components/ServiceAreaMap"), // 👈 minúsculas
+  () => import("./components/ServiceAreaMap"), // relativo al archivo
   { ssr: false, loading: () => <div className="h-[420px] w-full rounded-2xl bg-black/5 animate-pulse" /> }
 );
+
 
 // ...el resto de tu código igual, sin el bloque de submit/form que nunca usas...
 
