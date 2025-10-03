@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+
 
 /* ===== Brand tokens (Tailwind v4) ===== */
 @theme {

@@ -1,7 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import ContactForm from "./Components/ContactForm";
+import ContactForm from "./components/ContactForm"; // 👈 minúsculas
+
+import dynamic from "next/dynamic";
+
+const ServiceAreaMap = dynamic(
+  () => import("@/app/components/ServiceAreaMap"), // 👈 minúsculas
+  { ssr: false, loading: () => <div className="h-[420px] w-full rounded-2xl bg-black/5 animate-pulse" /> }
+);
+
+// ...el resto de tu código igual, sin el bloque de submit/form que nunca usas...
 
 
 /**
@@ -376,36 +385,28 @@ export default function Page() {
         </section>
 
         {/* AREAS */}
-        <section id="areas" className="mx-auto max-w-6xl px-4 py-14">
-          <h2 className="text-2xl md:text-3xl font-extrabold">
-            {t("Service Areas", "Áreas de servicio")}
-          </h2>
-          <p className="mt-2 text-brand-cream/90">
-            North Jersey — Jersey City • Newark • Hoboken • Elizabeth • Hackensack • Clifton • Union City • North Bergen • Bayonne • Kearny
-          </p>
-          <div className="mt-6 overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur">
-            <iframe
-              title="North Jersey map"
-              className="w-full h-[300px] md:h-[380px]"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6049.343196326338!2d-74.056!3d40.733"
-            />
-          </div>
-        </section>
+
+     
+
+        <section id="service-areas" className="pt-8">
+  <h2 className="text-2xl font-semibold mb-2">Service Areas</h2>
+  <p className="opacity-80 mb-4">
+    North Jersey — Jersey City • Hoboken • Kearny • Newark • Elizabeth • Hackensack •
+    Clifton • Union City • North Bergen • Bayonne
+  </p>
+  <ServiceAreaMap />
+</section>
+
+
 
         {/* DISCLAIMER */}
-        <section className="mx-auto max-w-6xl px-4">
-          <div className="card-surface p-4 text-ink-900">
-            <h3 className="font-semibold">{t("What we don’t do", "Lo que no hacemos")}</h3>
-            <p className="text-sm text-ink-700 mt-1">
-              {t(
-                "High-voltage electrical, major plumbing, or structural work.",
-                "Electricidad de alto voltaje, plomería mayor o trabajo estructural."
-              )}
-            </p>
-          </div>
-        </section>
+        <section className="mx-auto max-w-6xl px-4 mt-4 text-center text-sm opacity-70">
+  {t(
+    "We do not perform high-voltage electrical, major plumbing, or structural work.",
+    "No realizamos trabajos de electricidad de alto voltaje, plomería mayor o estructurales."
+  )}
+</section>
+
 
         {/* CONTACT */}
         <section
