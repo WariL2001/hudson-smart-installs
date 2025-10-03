@@ -1,67 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";              // 👈 primero importas dynamic
-import ContactForm from "./components/ContactForm";  // 👈 después ContactForm
+import dynamic from "next/dynamic";
+import ContactForm from "./components/ContactForm";
 
 const ServiceAreaMap = dynamic(
-  () => import("./components/ServiceAreaMap"),   // 👈 exacto al nombre del archivo
+  () => import("./components/ServiceAreaMap"),
   { ssr: false, loading: () => <div className="h-[420px] w-full rounded-2xl bg-black/5 animate-pulse" /> }
 );
 
-
-// ...el resto de tu código igual, sin el bloque de submit/form que nunca usas...
-
-
 /**
- * North Jersey Tech — Services & Design
- * - Integrates comprehensive bilingual services catalog
+ * Hudson Smart Installs — Services & Design
+ * - Bilingual catalog
  * - Accessible CTAs, headings, and lists
- * - Color composition: gradient shell + cream content surfaces
+ * - Gradient shell + cream content surfaces
  * - Emphasizes North Jersey service area
- * - Contact form wired (optional): see API route stub at bottom
  */
 
 export default function Page() {
   const [lang, setLang] = useState<"en" | "es">("en");
   const t = (en: string, es: string) => (lang === "en" ? en : es);
-  // ---- CONTACT FORM STATE & HANDLERS ----
-  const [form, setForm] = useState({ name: "", email: "", phone: "", details: "", hp: "" });
-  const [sending, setSending] = useState(false);
-  const [_status, setStatus] = useState<null | "ok" | "error">(null);
-  
-  async function _submit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (sending) return;
-    setSending(true);
-    setStatus(null);
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          email: form.email.trim(),
-          phone: form.phone.trim() || undefined,
-          details: form.details.trim(),
-          hp: form.hp || undefined, // honeypot
-        }),
-      });
-      if (res.ok) {
-        setStatus("ok");
-        setForm({ name: "", email: "", phone: "", details: "", hp: "" });
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    } finally {
-      setSending(false);
-    }
-  }
-  
-
-
 
   // ---------- PACKAGES (short + friendly) ----------
   const packages = [
@@ -94,7 +52,7 @@ export default function Page() {
         "Agenda prioritaria + revisiones por temporada"
       ),
     },
-  ];
+  ] as const;
 
   // ---------- SERVICE CATALOG (comprehensive, tech-only) ----------
   type Service = {
@@ -126,7 +84,7 @@ export default function Page() {
     },
     {
       id: "wifi-aps",
-      title: tr("Wi-Fi Optimization & Access Points", "Optimización de Wi‑Fi y Access Points"),
+      title: tr("Wi-Fi Optimization & Access Points", "Optimización de Wi-Fi y Access Points"),
       subtitle: tr("Dead-zone removal • Roaming tuned", "Sin zonas muertas • Roaming ajustado"),
       bullets: [
         tr("AP placement & mounting (ceiling/wall)", "Ubicación y montaje de AP (techo/pared)"),
@@ -270,7 +228,7 @@ export default function Page() {
       {/* SHELL: gradient background; cream cards */}
       <div className="min-h-screen bg-[linear-gradient(120deg,theme(colors.brand.navy),theme(colors.brand.orange))] text-white">
         {/* HERO */}
-        <section className="">
+        <section>
           <div className="mx-auto max-w-6xl px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
             <div>
               <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
@@ -281,8 +239,8 @@ export default function Page() {
               </h1>
               <p className="mt-4 text-brand-cream/90 md:text-lg">
                 {t(
-                  "Wi‑Fi fixes, smart tech setup, clean cabling, and on-site IT optimization.",
-                  "Arreglos de Wi‑Fi, configuración de tecnología inteligente, cableado prolijo y optimización de IT en sitio."
+                  "Wi-Fi fixes, smart tech setup, clean cabling, and on-site IT optimization.",
+                  "Arreglos de Wi-Fi, configuración de tecnología inteligente, cableado prolijo y optimización de IT en sitio."
                 )}
               </p>
 
@@ -293,11 +251,7 @@ export default function Page() {
                 <a href="tel:+15513429343" className="btn btn-ghost">
                   {t("Call", "Llamar")}
                 </a>
-                <a
-                  href="https://wa.me/15513429343"
-                  className="btn btn-ghost"
-                  aria-label="WhatsApp"
-                >
+                <a href="https://wa.me/15513429343" className="btn btn-ghost" aria-label="WhatsApp">
                   WhatsApp
                 </a>
                 <button
@@ -356,13 +310,10 @@ export default function Page() {
           <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((s) => (
               <article key={s.id} id={s.id} className="card-surface p-6 text-ink-900 scroll-mt-20">
-
                 <header className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="text-lg font-bold">{s.title}</h3>
-                    {s.subtitle && (
-                      <p className="text-ink-500 mt-0.5">{s.subtitle}</p>
-                    )}
+                    {s.subtitle && <p className="text-ink-500 mt-0.5">{s.subtitle}</p>}
                   </div>
                   <a href="#contact" className="btn btn-primary whitespace-nowrap">
                     {t("Get a Quote", "Pedir cotización")}
@@ -383,66 +334,61 @@ export default function Page() {
         </section>
 
         {/* AREAS */}
-<section
-  id="areas"
-  className="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-[1fr_3fr] gap-12 scroll-mt-20"
->
-  {/* TEXTO */}
-  <div>
-    <h2 className="text-2xl font-semibold mb-6">Service Areas</h2>
-    <ul className="space-y-3 opacity-90 text-lg">
-      <li>North Jersey</li>
-      <li>Jersey City</li>
-      <li>Hoboken</li>
-      <li>Kearny</li>
-      <li>Newark</li>
-      <li>Elizabeth</li>
-      <li>Hackensack</li>
-      <li>Clifton</li>
-      <li>Union City</li>
-      <li>North Bergen</li>
-      <li>Bayonne</li>
-    </ul>
-  </div>
+        <section
+          id="areas"
+          className="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-[1fr_3fr] gap-12 scroll-mt-20"
+        >
+          {/* TEXTO */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-6">Service Areas</h2>
+            <ul className="space-y-3 opacity-90 text-lg">
+              <li>North Jersey</li>
+              <li>Jersey City</li>
+              <li>Hoboken</li>
+              <li>Kearny</li>
+              <li>Newark</li>
+              <li>Elizabeth</li>
+              <li>Hackensack</li>
+              <li>Clifton</li>
+              <li>Union City</li>
+              <li>North Bergen</li>
+              <li>Bayonne</li>
+            </ul>
+          </div>
 
-  {/* MAPA */}
-  <div className="h-[540px] w-full rounded-2xl overflow-hidden shadow-lg">
-    <ServiceAreaMap />
-  </div>
-</section>
+          {/* MAPA */}
+          <div className="h-[540px] w-full rounded-2xl overflow-hidden shadow-lg">
+            <ServiceAreaMap />
+          </div>
+        </section>
 
-{/* CONTACT */}
-<section
-  id="contact"
-  className="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-2 gap-12"
->
-  {/* LEFT SIDE = contact details */}
-  <div className="space-y-4">
-    <h2 className="text-2xl md:text-3xl font-semibold">Contact Us</h2>
-    <p className="opacity-80">📍 Serving North Jersey • Bilingual (EN/ES)</p>
-    <p className="opacity-80">📞 (551) 342-9343</p>
-    <p className="opacity-80">✉️ warilojano@gmail.com</p>
+        {/* CONTACT */}
+        <section id="contact" className="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-2 gap-12">
+          {/* LEFT SIDE = contact details */}
+          <div className="space-y-4">
+            <h2 className="text-2xl md:text-3xl font-semibold">Contact Us</h2>
+            <p className="opacity-80">📍 Serving North Jersey • Bilingual (EN/ES)</p>
+            <p className="opacity-80">📞 (551) 342-9343</p>
+            <p className="opacity-80">✉️ warilojano@gmail.com</p>
 
-    <div className="flex gap-3 mt-4">
-      <a href="tel:+15513429343" className="btn btn-primary">Call</a>
-      <a
-        href="https://wa.me/+15513429343"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn bg-green-600 hover:bg-green-700 text-white"
-      >
-        WhatsApp
-      </a>
-    </div>
-  </div>
+            <div className="flex gap-3 mt-4">
+              <a href="tel:+15513429343" className="btn btn-primary">Call</a>
+              <a
+                href="https://wa.me/+15513429343"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn bg-green-600 hover:bg-green-700 text-white"
+              >
+                WhatsApp
+              </a>
+            </div>
+          </div>
 
-  {/* RIGHT SIDE = form (manejado internamente) */}
-  <div>
-    <ContactForm />
-  </div>
-</section>
-
-
+          {/* RIGHT SIDE = form (handled internally) */}
+          <div>
+            <ContactForm />
+          </div>
+        </section>
       </div>
 
       {/* JSON-LD: Service area emphasis (SEO) */}
@@ -452,7 +398,7 @@ export default function Page() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
-            name: "North Jersey Tech",
+            name: "Hudson Smart Installs",
             areaServed: [
               "Jersey City",
               "Newark",
@@ -467,7 +413,7 @@ export default function Page() {
             ],
             serviceType: [
               "Networking",
-              "Wi‑Fi",
+              "Wi-Fi",
               "Cabling",
               "CCTV",
               "Smart Locks",
@@ -483,63 +429,3 @@ export default function Page() {
     </>
   );
 }
-
-/* =============================================================
-   OPTIONAL: API route stub (app/api/contact/route.ts)
-   - Install: npm i nodemailer zod
-   - Set env: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_TO
-   ============================================================= */
-
-// export const runtime = "edge"; // or remove for Node.js if SMTP library needs it
-// import { NextRequest, NextResponse } from "next/server";
-// import nodemailer from "nodemailer";
-// import { z } from "zod";
-//
-// const schema = z.object({
-//   name: z.string().min(1),
-//   email: z.string().email(),
-//   phone: z.string().optional(),
-//   details: z.string().min(1),
-//   hp: z.string().optional(), // honeypot
-// });
-//
-// export async function POST(req: NextRequest) {
-//   const data = await req.json().catch(() => ({}));
-//   const parsed = schema.safeParse(data);
-//   if (!parsed.success || parsed.data.hp) {
-//     return NextResponse.json({ ok: false }, { status: 400 });
-//   }
-//
-//   const t = nodemailer.createTransport({
-//     host: process.env.SMTP_HOST,
-//     port: Number(process.env.SMTP_PORT || 587),
-//     secure: false,
-//     auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-//   });
-//
-//   await t.sendMail({
-//     from: `NJ Tech <${process.env.SMTP_USER}>`,
-//     to: process.env.CONTACT_TO,
-//     subject: `New quote request: ${parsed.data.name}`,
-//     text: `${parsed.data.name} (${parsed.data.email}${parsed.data.phone ? ", " + parsed.data.phone : ""})\n\n${parsed.data.details}`,
-//   });
-//
-//   return NextResponse.json({ ok: true });
-// }
-
-/* =============================================================
-   STYLE NOTES (Tailwind v4)
-   - Shell uses gradient (navy→orange). Content surfaces use cream/white.
-   - Provide utilities in globals.css for .card-surface and .btn variants.
-   Example (globals):
-
-   .card-surface { @apply bg-brand-cream text-ink-900 rounded-2xl shadow-sm border border-white\/10 backdrop-blur; }
-   .btn { @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60; }
-   .btn-primary { @apply bg-brand-orange text-white hover:opacity-90; }
-   .btn-ghost { @apply bg-white/10 text-white hover:bg-white/15; }
-
-   Also set text-ink-* tokens:
-   :root { --ink-900:#0F172A; --ink-700:#334155; --ink-500:#64748B; }
-   .text-ink-900{color:var(--ink-900)} .text-ink-700{color:var(--ink-700)} .text-ink-500{color:var(--ink-500)}
-
-   ============================================================= */
