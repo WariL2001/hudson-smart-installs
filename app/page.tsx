@@ -248,10 +248,10 @@ export default function Page() {
                 <a href="#contact" className="btn btn-primary">
                   {t("Get a Quote", "Pedir cotización")}
                 </a>
-                <a href="tel:+15513429343" className="btn btn-ghost">
+                <a href="tel:+12012757451" className="btn btn-ghost">
                   {t("Call", "Llamar")}
                 </a>
-                <a href="https://wa.me/15513429343" className="btn btn-ghost" aria-label="WhatsApp">
+                <a href="https://wa.me/12012757451" className="btn btn-ghost" aria-label="WhatsApp">
                   WhatsApp
                 </a>
                 <button
@@ -368,13 +368,13 @@ export default function Page() {
           <div className="space-y-4">
             <h2 className="text-2xl md:text-3xl font-semibold">Contact Us</h2>
             <p className="opacity-80">📍 Serving North Jersey • Bilingual (EN/ES)</p>
-            <p className="opacity-80">📞 (551) 342-9343</p>
-            <p className="opacity-80">✉️ warilojano@gmail.com</p>
+            <p className="opacity-80">📞 (201) 275-7451</p>
+            <p className="opacity-80">✉️ info@hudsonsmartinstalls.com</p>
 
             <div className="flex gap-3 mt-4">
-              <a href="tel:+15513429343" className="btn btn-primary">Call</a>
+              <a href="tel:+12012757451" className="btn btn-primary">Call</a>
               <a
-                href="https://wa.me/+15513429343"
+                href="https://wa.me/+12012757451"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn bg-green-600 hover:bg-green-700 text-white"
