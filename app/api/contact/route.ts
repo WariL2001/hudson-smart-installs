@@ -23,29 +23,42 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false }, { status: 400 });
     }
 
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT || 587),
-      secure: false,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+   const host = process.env.SMTP_HOST?.trim();
+const port = Number(process.env.SMTP_PORT ?? 587);
+const user = process.env.EMAIL_USER?.trim();
+const pass = process.env.EMAIL_PASS?.trim();
 
-    await transporter.sendMail({
-      from: `"Contact Form" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
-      subject: `New contact from ${parsed.data.name}`,
-      replyTo: parsed.data.email,
-      text: [
-        `Name: ${parsed.data.name}`,
-        `Email: ${parsed.data.email}`,
-        `Phone: ${parsed.data.phone ?? "-"}`,
-        "",
-        parsed.data.details,
-      ].join("\n"),
-    });
+if (!host || !user || !pass) {
+  console.error("Missing SMTP envs", { host, userSet: !!user, passSet: !!pass });
+  return NextResponse.json({ ok: false }, { status: 500 });
+}
+
+const transporter = nodemailer.createTransport({
+  host,
+  port,
+  secure: port === 465, // 587=false (STARTTLS), 465=true (SSL)
+  auth: { user, pass },
+});
+
+// Optional: verify helps surface real SMTP errors in logs
+await transporter.verify().catch((e) => {
+  console.error("SMTP verify failed:", e?.message || e);
+  throw e;
+});
+
+await transporter.sendMail({
+  from: `"Hudson Smart Installs" <${user}>`, // must match auth user
+  to: user,
+  replyTo: parsed.data.email,
+  subject: `New contact from ${parsed.data.name}`,
+  text: [
+    `Name: ${parsed.data.name}`,
+    `Email: ${parsed.data.email}`,
+    `Phone: ${parsed.data.phone ?? "-"}`,
+    "",
+    parsed.data.details,
+  ].join("\n"),
+});
 
     return NextResponse.json({ ok: true });
   } catch (err) { // <— no 'any'
