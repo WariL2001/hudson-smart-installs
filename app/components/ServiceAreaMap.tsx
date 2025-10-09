@@ -261,9 +261,11 @@ export default function ServiceAreaMap() {
 
   // IMPORTANTE: el padre define la altura; aquí usamos h-full.
   return (
-    <div
-      ref={containerRef}
-      className="h-full w-full rounded-2xl overflow-hidden shadow-sm border border-white/10"
-    />
+    <div className="relative z-0"> {/* keeps the whole map stack under the navbar */}
+      <div
+        ref={containerRef}
+        className="h-[600px] w-full rounded-2xl overflow-hidden shadow-sm border border-white/10 z-0"
+      />
+    </div>
   );
 }

@@ -357,9 +357,9 @@ export default function Page() {
           </div>
 
           {/* MAPA */}
-          <div className="h-[540px] w-full rounded-2xl overflow-hidden shadow-lg">
-            <ServiceAreaMap />
-          </div>
+          <div className="relative z-0 h-[540px] w-full rounded-2xl overflow-hidden shadow-lg">
+  <ServiceAreaMap />
+</div>
         </section>
 
         {/* CONTACT */}

@@ -84,19 +84,28 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-brand-navy/70 backdrop-blur border-b border-white/10">
+    <header className="sticky top-0 z-[1100] bg-brand-navy/70 backdrop-blur border-b border-white/10">
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-6">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2" aria-label="Hudson Smart Installs — Home">
-          <Image
-            src="/logohsi.png"
-            alt="Hudson Smart Installs"
-            width={160}
-            height={40}
-            priority
-            className="h-6 md:h-8 w-auto"
-          />
-        </Link>
+      <div className="relative flex items-center justify-center">
+  {/* Centered organic background */}
+  <span className="hsi-splat absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+  
+  <Link
+    href="/"
+    className="relative flex items-center gap-2"
+    aria-label="Hudson Smart Installs — Home"
+  >
+    <Image
+      src="/logohsi.png"
+      alt="Hudson Smart Installs"
+      width={180}
+      height={48}
+      priority
+      className="relative h-8 w-auto"
+    />
+  </Link>
+</div>
+
 
         {/* Desktop nav */}
         <nav className="ml-auto hidden md:flex gap-6 text-sm">
