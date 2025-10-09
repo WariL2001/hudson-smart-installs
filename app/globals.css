@@ -132,5 +132,5 @@ img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
 }
 
 @media (min-width: 768px) {
-  .hsi-splat { width: 13rem; height: 13rem; }
+  .hsi-splat { width: 13navbarem; height: 13rem; }
 }
