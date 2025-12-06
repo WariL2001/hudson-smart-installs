@@ -19,7 +19,15 @@
 html { scroll-behavior: smooth; }
 body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
+body {
+  background-color: var(--color-brand-cream) !important;
+  color: var(--color-ink-900);
+}
+
 img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
+
+
+
 
 /* Visible focus for keyboard users */
 :focus-visible {
@@ -69,68 +77,113 @@ img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
   z-index: 500 !important; /* controls above tiles, still under navbar */
 }
 
-/* --- Smaller, organic "Nickelodeon-style" blob --- */
-@keyframes hsi-splat-morph {
-  0% {
-    border-radius: 58% 42% 70% 30% / 52% 38% 62% 48%;
-    transform: rotate(0deg) scale(1);
-  }
-  25% {
-    border-radius: 70% 30% 45% 55% / 48% 60% 40% 52%;
-    transform: rotate(8deg) scale(1.05);
-  }
-  50% {
-    border-radius: 40% 60% 55% 45% / 60% 40% 65% 35%;
-    transform: rotate(-4deg) scale(1.07);
-  }
-  75% {
-    border-radius: 65% 35% 35% 65% / 50% 65% 35% 60%;
-    transform: rotate(-8deg) scale(1.04);
-  }
-  100% {
-    border-radius: 58% 42% 70% 30% / 52% 38% 62% 48%;
-    transform: rotate(0deg) scale(1);
-  }
+/* === HUDSON SMART INSTALLS · TECH LINES HERO === */
+
+.hero-tech-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 }
 
-@keyframes hsi-splat-pulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 18px rgba(255,255,255,.15)); }
-  50%      { transform: scale(1.06); filter: drop-shadow(0 6px 26px rgba(255,255,255,.22)); }
-}
-
-.hsi-splat {
+/* SVG container behind the logo */
+.hero-tech-lines {
   position: absolute;
-  width: 8rem;      /* smaller size */
-  height: 8rem;
-  background: radial-gradient(
-    60% 60% at 35% 35%,
-    rgba(255,255,255,0.95),
-    rgba(255,255,255,0.8) 40%,
-    rgba(255,255,255,0.6) 70%,
-    rgba(255,255,255,0.4) 100%
-  );
-  opacity: 0.99;
-  filter: blur(5px);
-  box-shadow:
-    inset 0 -10px 20px rgba(0,0,0,0.08),
-    inset 0 8px 15px rgba(255,255,255,0.35);
-  border-radius: 60% 40% 70% 30% / 45% 65% 35% 55%;
-  will-change: transform, border-radius, filter;
+  inset: -5%;        /* acercamos las líneas al logo */
+  opacity: 0.85;     /* mucho más visible en fondo claro */
   pointer-events: none;
-  animation:
-    hsi-splat-morph 12s ease-in-out infinite alternate,
-    hsi-splat-pulse 4s ease-in-out infinite;
 }
 
-.hsi-splat::after {
+/* Animate the circuit strokes */
+.hero-tech-lines path {
+  stroke: #f97316;   /* Hudson orange */
+  stroke-width: 2.2;
+  fill: transparent;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 160;
+  animation: tech-lines-draw 10s ease-in-out infinite alternate;
+}
+
+/* Slight glow around the lines */
+.hero-tech-lines path.glow {
+  stroke-width: 4;
+  stroke: rgba(249, 115, 22, 0.45);
+  filter: blur(3px);
+}
+
+/* Subtle motion for the logo only */
+.logo-drift { /* animation removed for a static logo */ }
+
+/* Animated underline for the desktop nav */
+.nav-wave {
+  position: relative;
+}
+.nav-wave::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: radial-gradient(40% 40% at 25% 20%, rgba(255,255,255,0.5), rgba(255,255,255,0) 70%);
-  border-radius: inherit;
-  mix-blend-mode: screen;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(13, 27, 42, 0.12), rgba(255, 122, 0, 0.6), rgba(13, 27, 42, 0.12));
+  background-size: 200% 100%;
+  border-radius: 999px;
+  animation: nav-wave 10s ease-in-out infinite;
+}
+@keyframes nav-wave {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-@media (min-width: 768px) {
-  .hsi-splat { width: 13rem; height: 13rem; }
+@keyframes tech-lines-draw {
+  0% {
+    stroke-dashoffset: 160;
+    opacity: 0.5;
+  }
+  50% {
+    stroke-dashoffset: 80;
+    opacity: 0.95;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+/* Soft gradient mesh for hero backgrounds (calmer than waves) */
+.mesh-shell {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(120% 80% at 50% 0%, rgba(255, 247, 235, 0.8), rgba(255, 247, 235, 0.2));
+}
+.mesh {
+  position: absolute;
+  filter: blur(70px);
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+}
+.mesh-a {
+  width: 70%;
+  height: 60%;
+  top: -10%;
+  left: -15%;
+  background: radial-gradient(circle at 40% 40%, rgba(13, 27, 42, 0.12), transparent 60%);
+}
+.mesh-b {
+  width: 65%;
+  height: 55%;
+  bottom: -8%;
+  right: -18%;
+  background: radial-gradient(circle at 60% 50%, rgba(255, 122, 0, 0.12), transparent 65%);
+}
+.mesh-c {
+  width: 80%;
+  height: 60%;
+  top: 30%;
+  left: 20%;
+  background: radial-gradient(circle at 50% 50%, rgba(13, 27, 42, 0.08), transparent 70%);
 }

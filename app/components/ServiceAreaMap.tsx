@@ -9,7 +9,6 @@ import type {
   ControlPosition,
   LayerGroup,
   LatLngBoundsExpression,
-  CircleMarkerOptions,
 } from "leaflet";
 
 /**
@@ -37,15 +36,26 @@ export default function ServiceAreaMap() {
         const map = L.map(containerRef.current, {
           center: [40.7357, -74.1724],
           zoom: 10,
+          zoomControl: false,
           scrollWheelZoom: false,
         });
         mapRef.current = map;
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        // High-quality, retina-ready tiles (CartoDB Positron)
+        L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
           attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
           maxZoom: 19,
+          subdomains: "abcd",
+          detectRetina: true,
         }).addTo(map);
+
+        // Minimal zoom control tucked in the corner
+        L.control
+          .zoom({
+            position: "bottomright",
+          })
+          .addTo(map);
       }
 
       const map = mapRef.current!;
@@ -59,20 +69,38 @@ export default function ServiceAreaMap() {
       }
 
       // --- Estilos
-      const coreStyle: CircleMarkerOptions = {
-        radius: 8,
-        color: "#0D1B2A",
-        fillColor: "#0D1B2A",
-        fillOpacity: 0.9,
-        weight: 1,
-      };
-      const reqStyle: CircleMarkerOptions = {
-        radius: 8,
-        color: "#FF7A00",
-        fillColor: "#FF7A00",
-        fillOpacity: 0.9,
-        weight: 1,
-      };
+      // Custom pin-style divIcons for a more polished look
+      const makePin = (color: string) =>
+        L.divIcon({
+          className: "",
+          html: `
+            <span style="
+              position: relative;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              width: 20px;
+              height: 20px;
+              border-radius: 12px 12px 12px 0;
+              background: ${color};
+              transform: rotate(45deg);
+              box-shadow: 0 8px 16px rgba(0,0,0,0.18);
+              border: 1px solid rgba(0,0,0,0.08);
+            ">
+              <span style="
+                display:block;
+                width: 8px;
+                height: 8px;
+                border-radius: 999px;
+                background: white;
+                transform: rotate(-45deg);
+              "></span>
+            </span>
+          `,
+          iconSize: [20, 20],
+          iconAnchor: [10, 20],
+          popupAnchor: [0, -10],
+        });
 
       // --- Puntos
       type City = { name: string; lat: number; lng: number };
@@ -96,16 +124,47 @@ export default function ServiceAreaMap() {
       const coreGroup = L.layerGroup();
       const reqGroup = L.layerGroup();
 
-      CORE.forEach((c) =>
-        L.circleMarker([c.lat, c.lng], coreStyle)
-          .bindTooltip(c.name, { permanent: false, direction: "top" })
-          .addTo(coreGroup)
-      );
-      BY_REQUEST.forEach((c) =>
-        L.circleMarker([c.lat, c.lng], reqStyle)
-          .bindTooltip(c.name, { permanent: false, direction: "top" })
-          .addTo(reqGroup)
-      );
+      const coreIcon = makePin("#0D1B2A");
+      const reqIcon = makePin("#FF7A00");
+
+      CORE.forEach((c) => {
+        const marker = L.marker([c.lat, c.lng], { icon: coreIcon })
+          .bindPopup(c.name, { closeButton: false, autoClose: true, closeOnClick: true })
+          .addTo(coreGroup);
+        marker.on("mouseover", () => marker.openPopup());
+        marker.on("mouseout", () => marker.closePopup());
+      });
+
+      BY_REQUEST.forEach((c) => {
+        const marker = L.marker([c.lat, c.lng], { icon: reqIcon })
+          .bindPopup(c.name, { closeButton: false, autoClose: true, closeOnClick: true })
+          .addTo(reqGroup);
+        marker.on("mouseover", () => marker.openPopup());
+        marker.on("mouseout", () => marker.closePopup());
+      });
+
+      // Coverage halo (gives a subtle professional frame)
+      const COVERAGE_CENTER: [number, number] = [40.75, -74.1];
+      const primaryHalo = L.circle(COVERAGE_CENTER, {
+        radius: 32000,
+        color: "#0D1B2A",
+        fillColor: "#0D1B2A",
+        fillOpacity: 0.05,
+        weight: 1,
+        opacity: 0.25,
+      });
+      const softHalo = L.circle(COVERAGE_CENTER, {
+        radius: 45000,
+        color: "#FF7A00",
+        fillColor: "#FF7A00",
+        fillOpacity: 0.03,
+        weight: 1,
+        opacity: 0.18,
+        dashArray: "6 8",
+      });
+
+      primaryHalo.addTo(map);
+      softHalo.addTo(map);
 
       coreGroup.addTo(map);
       reqGroup.addTo(map);
@@ -149,18 +208,28 @@ export default function ServiceAreaMap() {
           div.style.minWidth = "180px";
           L.DomEvent.disableClickPropagation(div);
 
-          const dot = (color: string) =>
-            `<span style="display:inline-block;width:10px;height:10px;border-radius:9999px;background:${color};margin-right:8px;vertical-align:middle"></span>`;
+          const pin = (color: string) =>
+            `<span style="
+              display:inline-block;
+              width:14px;
+              height:14px;
+              border-radius:10px 10px 10px 0;
+              background:${color};
+              transform: rotate(45deg);
+              margin-right:8px;
+              box-shadow:0 4px 8px rgba(0,0,0,0.15);
+              vertical-align:middle;
+            "></span>`;
 
           div.innerHTML = `
             <div style="font-weight:600;margin-bottom:6px">Service coverage</div>
             <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer">
               <input id="coreToggle" type="checkbox" checked />
-              ${dot("#0D1B2A")} <span>Core</span>
+              ${pin("#0D1B2A")} <span>Core</span>
             </label>
             <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer">
               <input id="reqToggle" type="checkbox" checked />
-              ${dot("#FF7A00")} <span>By request</span>
+              ${pin("#FF7A00")} <span>By request</span>
             </label>
             <button id="fitBtn" type="button"
               style="width:100%;margin-top:6px;border:none;border-radius:10px;padding:6px 8px;font-weight:600;cursor:pointer;background:#0D1B2A;color:white">
@@ -231,7 +300,7 @@ export default function ServiceAreaMap() {
 
           coreToggle?.addEventListener("change", updateVisibility);
           reqToggle?.addEventListener("change", updateVisibility);
-          fitBtn?.addEventListener("click", (_ev: MouseEvent) => doFit());
+          fitBtn?.addEventListener("click", () => doFit());
 
           return div;
         }
@@ -264,7 +333,7 @@ export default function ServiceAreaMap() {
     <div className="relative z-0"> {/* keeps the whole map stack under the navbar */}
       <div
         ref={containerRef}
-        className="h-[600px] w-full rounded-2xl overflow-hidden shadow-sm border border-white/10 z-0"
+        className="h-[600px] w-full rounded-2xl overflow-hidden shadow-sm border border-brand-navy/10 z-0"
       />
     </div>
   );

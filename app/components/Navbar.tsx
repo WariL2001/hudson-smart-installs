@@ -3,24 +3,27 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
-type NavItem = { href: string; label: string };
+type NavItem = { href: string; label: string; hash?: string };
 
-// Usa los IDs que ya existen en tu page.tsx
 const NAV: NavItem[] = [
-  { href: "#network-cabling", label: "Networking & Cabling" },
-  { href: "#smart-home",       label: "Smart Home & Office" },
-  { href: "#remote-support",   label: "IT Support" },
-  { href: "#tv-av",            label: "Custom Installs" },
-  { href: "#service-areas",    label: "Service Areas" },
-  { href: "#contact",          label: "Contact" },
+  { href: "/networking-cabling", label: "Networking & Cabling" },
+  { href: "/smart-home-office", label: "Smart Home & Office" },
+  { href: "/it-support", label: "IT Support" },
+  { href: "/#services", label: "Services", hash: "#services" },
+  { href: "/#areas", label: "Service Areas", hash: "#areas" },
+  { href: "/contact", label: "Contact" },
+  { href: "/reviews", label: "Reviews" },
 ];
+
 
 function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [hash, setHash] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -66,70 +69,71 @@ export default function Navbar() {
 
   // Click handler: smooth scroll + actualizar URL + cerrar si corresponde
   const onNavClick =
-    (href: string, closeAfter?: () => void) =>
+    (item: NavItem, closeAfter?: () => void) =>
     (e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (href.startsWith("#")) {
+      if (item.hash && pathname === "/") {
         e.preventDefault();
-        smoothScrollTo(href);
-        history.replaceState(null, "", href);
+        smoothScrollTo(item.hash);
+        history.replaceState(null, "", item.hash);
         closeAfter?.();
       }
     };
 
-  // Activo si coincide el hash (o por defecto #network-cabling al inicio)
-  const isActive = (href: string) => {
-    if (!href.startsWith("#")) return false;
-    const defaultWhenTop = href === "#network-cabling" && hash === "";
-    return hash === href || defaultWhenTop;
+  const isActive = (item: NavItem) => {
+    if (item.hash) return hash === item.hash && pathname === "/";
+    return pathname === item.href;
   };
 
   return (
-    <header className="sticky top-0 z-[1100] bg-brand-navy/70 backdrop-blur border-b border-white/10">
+    <header className="sticky top-0 z-[1100] bg-[#F5F1E5]/95 backdrop-blur border-b border-white/10">
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-6">
-      <div className="relative flex items-center justify-center">
-  {/* Centered organic background */}
-  <span className="hsi-splat absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
-  
-  <Link
-    href="/"
-    className="relative flex items-center gap-2"
-    aria-label="Hudson Smart Installs — Home"
-  >
-    <Image
-      src="/logohsi.png"
-      alt="Hudson Smart Installs"
-      width={180}
-      height={48}
-      priority
-      className="relative h-8 w-auto"
-    />
-  </Link>
-</div>
+      <div className="relative flex items-center justify-center w-[230px] h-[96px] mr-8 md:mr-14">
+        <Link
+          href="/"
+          className="relative z-10 flex items-center gap-2"
+          aria-label="Hudson Smart Installs — Home"
+        >
+          <Image
+            src="/logohsi.png"
+            alt="Hudson Smart Installs"
+            width={240}
+            height={80}
+            priority
+            className="h-14 w-auto object-contain"
+          />
+        </Link>
+      </div>
 
 
-        {/* Desktop nav */}
-        <nav className="ml-auto hidden md:flex gap-6 text-sm">
-          {NAV.map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
-              onClick={onNavClick(href)}
-              className={cn(
-                "hover:text-brand-orange focus-visible:text-brand-orange",
-                isActive(href) ? "text-brand-orange font-medium" : "text-brand-cream"
-              )}
-            >
-              {label}
-            </a>
-          ))}
-        </nav>
 
-        {/* CTA (desktop) */}
-        <div className="hidden md:flex items-center gap-2">
-          <a href="#contact" onClick={onNavClick("#contact")} className="btn btn-primary">
-            Book Now
-          </a>
-        </div>
+                {/* Desktop nav + CTA with animated underline */}
+                <div className="ml-auto hidden md:flex items-center gap-4 nav-wave">
+                  <nav className="flex gap-6 text-sm relative z-10">
+                    {NAV.map((item) => (
+                      <Link
+                        key={item.href + item.label}
+                        href={item.href}
+                        onClick={onNavClick(item)}
+                        className={cn(
+                          "hover:text-brand-orange focus-visible:text-brand-orange",
+                          isActive(item) ? "text-brand-orange font-medium" : "text-brand-navy"
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </nav>
+
+                  <div className="relative z-10 flex items-center gap-2">
+                    <Link
+                      href="/#contact"
+                      onClick={onNavClick({ href: "/#contact", hash: "#contact", label: "Contact" })}
+                      className="btn btn-primary"
+                    >
+                      Book Now
+                    </Link>
+                  </div>
+                </div>
 
         {/* Botón hamburguesa (solo móvil) */}
         <button
@@ -182,27 +186,34 @@ export default function Navbar() {
         </div>
 
         <nav className="flex flex-col gap-1 p-3">
-          {NAV.map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
-              onClick={onNavClick(href, () => setOpen(false))}
+          {NAV.map((item) => (
+            <Link
+              key={item.href + item.label}
+              href={item.href}
+              onClick={(e) => {
+                onNavClick(item, () => setOpen(false))(e);
+                if (!item.hash || pathname !== "/") setOpen(false);
+              }}
               className={cn(
                 "rounded-lg px-3 py-2 text-[15px] transition-colors hover:bg-white/10",
-                isActive(href) ? "bg-white/10 font-medium" : "text-brand-cream"
+                isActive(item) ? "bg-white/10 font-medium" : "text-brand-cream"
               )}
             >
-              {label}
-            </a>
+              {item.label}
+            </Link>
           ))}
 
-          <a
-            href="#contact"
-            onClick={onNavClick("#contact", () => setOpen(false))}
+          <Link
+            href="/#contact"
+            onClick={(e) => {
+              onNavClick({ href: "/#contact", hash: "#contact", label: "Contact" }, () => setOpen(false))(e);
+              setOpen(false);
+            }}
             className="mt-2 rounded-xl bg-brand-orange px-3 py-2 text-sm font-semibold text-white hover:opacity-90"
           >
             Book Now
-          </a>
+          </Link>
+
 
           <div className="mt-4 border-t border-white/10 pt-3 text-xs opacity-80">
             <p>Mon–Sat · 8:00–18:00</p>

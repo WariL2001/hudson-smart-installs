@@ -55,16 +55,13 @@ const SITE_URL =
   };
   
 
+
+  
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body
-        className="
-          min-h-screen text-brand-cream
-          bg-gradient-to-br from-brand-navy via-[#16263a] to-brand-orange/70
-          antialiased
-        "
-      >
+      <body className="relative min-h-screen bg-brand-cream text-ink-900">
+
         <a href="#main" className="skip-link">Skip to content</a>
 
         {/* NUEVO: Navbar como client component */}
@@ -82,6 +79,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </footer>
+
+        
+
+
       </body>
     </html>
   );

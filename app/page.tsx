@@ -10,383 +10,289 @@ const ServiceAreaMap = dynamic(
 );
 
 /**
- * Hudson Smart Installs — Services & Design
- * - Bilingual catalog
- * - Accessible CTAs, headings, and lists
- * - Gradient shell + cream content surfaces
- * - Emphasizes North Jersey service area
+ * Hudson Smart Installs — refreshed home
+ * - Bold hero with stats and trust signals
+ * - Clear packages + bilingual catalog
+ * - Process, service area map, and contact card
  */
 
 export default function Page() {
   const [lang, setLang] = useState<"en" | "es">("en");
   const t = (en: string, es: string) => (lang === "en" ? en : es);
 
-  // ---------- PACKAGES (short + friendly) ----------
-  const packages = [
+  const quickLinks = [
     {
-      title: t("Diagnostic Visit (up to 60 min)", "Visita de diagnóstico (hasta 60 min)"),
-      price: "$89",
-      bullet: t(
-        "Root-cause check + quick fixes when possible",
-        "Diagnóstico de causa raíz + arreglos rápidos si es posible"
-      ),
+      title: t("Networking & Cabling", "Redes y cableado"),
+      desc: t("Clean, labeled runs, Wi-Fi tuning, and tidy racks.", "Tendidos limpios, Wi-Fi ajustado y racks prolijos."),
+      href: "/networking-cabling",
     },
     {
-      title: t("Two-Hour On-Site Support", "Soporte en sitio de dos horas"),
-      price: "$149",
-      bullet: t(
-        "Most small tech issues resolved same visit",
-        "La mayoría de incidencias técnicas se resuelven en la misma visita"
-      ),
+      title: t("Smart Home & Office", "Hogar y oficina inteligente"),
+      desc: t("Locks, cameras, lighting, thermostats, and app setup.", "Cerraduras, cámaras, iluminación, termostatos y apps."),
+      href: "/smart-home-office",
     },
     {
-      title: t("Half-Day On-Site (4 hrs)", "Media jornada en sitio (4 h)"),
-      price: "$279",
-      bullet: t("Bundle tasks for better value", "Agrupa tareas para mejor valor"),
+      title: t("IT Support", "Soporte IT"),
+      desc: t("Remote help first, on-site when needed. Bilingual.", "Remoto primero, en sitio si hace falta. Bilingüe."),
+      href: "/it-support",
     },
-    {
-      title: t("Proactive Maintenance Plan", "Plan de mantenimiento proactivo"),
-      price: "$49/mo",
-      bullet: t(
-        "Priority scheduling + seasonal checks",
-        "Agenda prioritaria + revisiones por temporada"
-      ),
-    },
-  ] as const;
+  ];
 
-  // ---------- SERVICE CATALOG (comprehensive, tech-only) ----------
-  type Service = {
-    id: string;
-    title: string;
-    subtitle?: string;
-    bullets: string[];
-  };
+  const stats = [
+    {
+      label: t("Avg response", "Tiempo medio de respuesta"),
+      value: "<24h",
+      detail: t("Calls returned same day", "Devolvemos llamadas el mismo día"),
+    },
+    {
+      label: t("Google rating", "Calificación en Google"),
+      value: "5.0",
+      detail: t("Neighbors and small businesses", "Vecinos y pequeños negocios"),
+    },
+    {
+      label: t("Since", "Desde"),
+      value: "2018",
+      detail: t("Low-voltage + smart installs", "Instalaciones de bajo voltaje + smart"),
+    },
+  ];
 
-  const tr = (en: string, es: string) => (lang === "en" ? en : es); // avoid name clash
-
-  const services: Service[] = [
-    {
-      id: "network-cabling",
-      title: tr(
-        "Low-Voltage Cabling (Cat6/Cat6A/Cat7)",
-        "Cableado de bajo voltaje (Cat6/Cat6A/Cat7)"
-      ),
-      subtitle: tr("Clean runs • Labeling • Testing", "Tendidos limpios • Etiquetado • Pruebas"),
-      bullets: [
-        tr("New drops, extensions, and relocations", "Nuevas bajadas, extensiones y reubicaciones"),
-        tr(
-          "Patch panels, keystones, surface/flush mounts",
-          "Patch panels, keystones, cajas sobrepuestas/embutidas"
-        ),
-        tr("Cable certification + report (on request)", "Certificación de cables + reporte (a pedido)"),
-        tr("Conduit/tray routing & penetration sealing", "Canalización/bandejas y sellado de penetraciones"),
-      ],
-    },
-    {
-      id: "wifi-aps",
-      title: tr("Wi-Fi Optimization & Access Points", "Optimización de Wi-Fi y Access Points"),
-      subtitle: tr("Dead-zone removal • Roaming tuned", "Sin zonas muertas • Roaming ajustado"),
-      bullets: [
-        tr("AP placement & mounting (ceiling/wall)", "Ubicación y montaje de AP (techo/pared)"),
-        tr(
-          "Mesh/backhaul setup, channel/power planning",
-          "Configuración mesh/backhaul, canales y potencia"
-        ),
-        tr("SSID/VLAN separation for guests/IoT", "Separación SSID/VLAN para invitados/IoT"),
-        tr("Interference diagnostics (2.4/5/6 GHz)", "Diagnóstico de interferencias (2.4/5/6 GHz)"),
-      ],
-    },
-    {
-      id: "switch-firewall-vlan",
-      title: tr("Switches, Firewalls & VLANs", "Switches, Firewalls y VLANs"),
-      subtitle: tr("Small Office / Home Office networking", "Redes para oficina pequeña / hogar"),
-      bullets: [
-        tr("Router replacement, dual-WAN failover", "Reemplazo de router, dual-WAN y failover"),
-        tr("Managed switch configuration (L2/L3)", "Configuración de switches administrables (L2/L3)"),
-        tr(
-          "DHCP/DNS, QoS, port security, link aggregation",
-          "DHCP/DNS, QoS, seguridad de puertos, agregación"
-        ),
-        tr(
-          "Site-to-site / remote-user VPN (when supported)",
-          "VPN sitio-a-sitio / usuario remoto (según soporte)"
-        ),
-      ],
-    },
-    {
-      id: "rack-builds",
-      title: tr("Rack Builds & Network Cleanup", "Montaje de racks y orden de red"),
-      subtitle: tr("Tidy, labeled, serviceable", "Limpio, etiquetado y mantenible"),
-      bullets: [
-        tr("Wall-mount enclosures & full racks", "Gabinetes murales y racks completos"),
-        tr("Power layout, cable management, velcro + trays", "Distribución eléctrica y gestión de cables"),
-        tr("UPS install & graceful-shutdown setup", "Instalación de UPS y apagado seguro"),
-        tr("before/after documentation", "Documentación antes/después"),
-      ],
-    },
-    {
-      id: "cctv-doorbells",
-      title: tr(
-        "Cameras, Doorbells & Intercoms (Low-Voltage)",
-        "Cámaras, timbres y porteros (bajo voltaje)"
-      ),
-      subtitle: tr("Placement • Cabling • App setup", "Ubicación • Cableado • Configuración"),
-      bullets: [
-        tr("PoE/IP cams, NVR/DVR wiring & tuning", "Cámaras PoE/IP, cableado y ajuste de NVR/DVR"),
-        tr("Smart doorbells & chime adapters", "Timbres inteligentes y adaptadores de campana"),
-        tr("Notification zones & privacy masks", "Zonas de alerta y máscaras de privacidad"),
-        tr("Remote viewing & user permissions", "Acceso remoto y permisos de usuario"),
-      ],
-    },
-    {
-      id: "smart-locks-access",
-      title: tr(
-        "Smart Locks & Access (Residential/Light Commercial)",
-        "Cerraduras inteligentes y acceso (residencial/comercial ligero)"
-      ),
-      subtitle: tr("Keypads • App control • Schedules", "Teclados • App • Horarios"),
-      bullets: [
-        tr(
-          "Lock installs, strike alignment, door prep",
-          "Instalación de cerraduras, alineación de pernos, preparación de puerta"
-        ),
-        tr("User codes, auto-lock, audit basics", "Códigos, auto-bloqueo y auditoría básica"),
-        tr(
-          "Integration with hubs/automation (if supported)",
-          "Integración con hubs/automatización (si aplica)"
-        ),
-      ],
-    },
-    {
-      id: "tv-av",
-      title: tr("TV Mounting, AV & Conference Rooms", "Montaje de TV, AV y salas de reuniones"),
-      subtitle: tr("Concealed cabling • Calibrated", "Cableado oculto • Calibrado"),
-      bullets: [
-        tr("Fixed/tilt/full-motion mounts, soundbars & hides", "Soportes fijos/inclinables/articulados, barras de sonido"),
-        tr("HDMI/optic routing, baluns & in-wall plates", "Tendido HDMI/óptico, baluns y placas embutidas"),
-        tr(
-          "Wireless presentation & camera/mic placement",
-          "Presentación inalámbrica y ubicación de cámara/mic"
-        ),
-      ],
-    },
-    {
-      id: "backup-nas",
-      title: tr("Backups, NAS & File Sharing", "Backups, NAS y compartición de archivos"),
-      subtitle: tr("Protect what matters", "Protege lo importante"),
-      bullets: [
-        tr("NAS setup, RAID, SMB/AFP/NFS shares", "Configuración de NAS, RAID y carpetas compartidas"),
-        tr("Versioned backups to external/cloud", "Backups versionados a disco externo/nube"),
-        tr("PC/Mac onboarding & migration", "Alta y migración de PC/Mac"),
-      ],
-    },
-    {
-      id: "pos-peripherals",
-      title: tr("POS, Printers & Peripherals", "POS, impresoras y periféricos"),
-      subtitle: tr("Ready for day one", "Listo desde el primer día"),
-      bullets: [
-        tr(
-          "Receipt/label printers, scanners, cash drawers",
-          "Impresoras de recibo/etiquetas, escáneres, cajones"
-        ),
-        tr("Driver install, network share/queue setup", "Instalación de drivers y colas/red"),
-        tr("Cable management at counters/front desk", "Gestión de cables en mostradores"),
-      ],
-    },
-    {
-      id: "smart-home",
-      title: tr(
-        "Smart Thermostats, Lighting & Sensors",
-        "Termostatos, iluminación y sensores inteligentes"
-      ),
-      subtitle: tr("Install • Pair • Automate", "Instalar • Vincular • Automatizar"),
-      bullets: [
-        tr(
-          "Thermostats, switches/dimmers, leak/door sensors",
-          "Termostatos, interruptores/reguladores, sensores"
-        ),
-        tr("App scenes, schedules & basic routines", "Escenas, horarios y rutinas básicas"),
-      ],
-    },
-    {
-      id: "remote-support",
-      title: tr(
-        "Remote Support & On-Site Troubleshooting",
-        "Soporte remoto y en sitio"
-      ),
-      subtitle: tr("Quick help when you need it", "Ayuda rápida cuando la necesitas"),
-      bullets: [
-        tr("Malware cleanup & performance tuning", "Limpieza de malware y ajuste de rendimiento"),
-        tr("Email/identity, accounts, MFA & backups", "Correo, cuentas, MFA y copias de seguridad"),
-        tr("New-device setup, updates and hardening", "Alta de equipos, actualizaciones y endurecimiento"),
-      ],
-    },
+  const microHighlights = [
+    t("Licensed, insured, and bilingual (EN/ES)", "Con licencia, seguro y bilingüe (EN/ES)"),
+    t("Same-week installs when slots are open", "Instalaciones en la semana si hay cupo"),
+    t("Photos and labeling so future changes are easy", "Fotos y etiquetado para cambios futuros"),
+    t("Hudson, Essex, Bergen focus", "Enfocados en Hudson, Essex, Bergen"),
   ];
 
   return (
     <>
-      {/* SHELL: gradient background; cream cards */}
-      <div className="min-h-screen bg-[linear-gradient(120deg,theme(colors.brand.navy),theme(colors.brand.orange))] text-white">
+      <div className="bg-brand-cream text-ink-900">
         {/* HERO */}
-        <section>
-          <div className="mx-auto max-w-6xl px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
-            <div>
-              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-                {t(
-                  "Hands-on tech support and installations for homes and small businesses in North Jersey.",
-                  "Soporte técnico e instalaciones prácticas para hogares y pequeños negocios en el norte de Nueva Jersey."
-                )}
+        <section className="relative overflow-hidden bg-brand-cream text-ink-900">
+          <div className="mesh-shell" aria-hidden>
+            <div className="mesh mesh-a" />
+            <div className="mesh mesh-b" />
+            <div className="mesh mesh-c" />
+          </div>
+
+          <div className="relative mx-auto grid max-w-6xl items-start gap-12 px-4 py-16 md:grid-cols-[1.2fr_0.95fr] md:py-24">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-brand-navy ring-1 ring-brand-navy/10 shadow-sm">
+                <span>Hudson Smart Installs</span>
+                <span className="h-[1px] w-6 bg-brand-orange/80" />
+                <span>{t("North Jersey", "Norte de Nueva Jersey")}</span>
+              </div>
+
+              <h1 className="text-4xl font-extrabold leading-tight text-brand-navy md:text-6xl">
+                {t("Tech installs done neatly, labeled, and explained.", "Instalaciones tecnológicas prolijas, etiquetadas y explicadas.")}
               </h1>
-              <p className="mt-4 text-brand-cream/90 md:text-lg">
+              <p className="text-lg text-ink-700">
                 {t(
-                  "Wi-Fi fixes, smart tech setup, clean cabling, and on-site IT optimization.",
-                  "Arreglos de Wi-Fi, configuración de tecnología inteligente, cableado prolijo y optimización de IT en sitio."
+                  "Networking, smart devices, cameras, and IT support for North Jersey. Quick response, bilingual, and tidy work.",
+                  "Redes, dispositivos inteligentes, cámaras y soporte IT en el norte de NJ. Respuesta rápida, bilingüe y trabajo prolijo."
                 )}
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3">
                 <a href="#contact" className="btn btn-primary">
-                  {t("Get a Quote", "Pedir cotización")}
+                  {t("Book a visit", "Agenda una visita")}
                 </a>
-                <a href="tel:+12012757451" className="btn btn-ghost">
+                <a href="tel:+12012757451" className="btn btn-outline-dark">
                   {t("Call", "Llamar")}
                 </a>
-                <a href="https://wa.me/12012757451" className="btn btn-ghost" aria-label="WhatsApp">
+                <a href="https://wa.me/12012757451" className="btn btn-outline-dark" aria-label="WhatsApp">
                   WhatsApp
                 </a>
                 <button
                   onClick={() => setLang(lang === "en" ? "es" : "en")}
-                  className="btn border border-white/30 hover:bg-white/10"
+                  className="btn btn-outline-dark"
                   aria-label="Toggle language English/Spanish"
                 >
                   {lang === "en" ? "ES" : "EN"}
                 </button>
               </div>
 
-              <ul className="mt-6 grid grid-cols-2 gap-2 text-brand-cream/90 text-sm">
-                <li>✅ {t("On-time & professional", "Puntual y profesional")}</li>
-                <li>✅ {t("Bilingual (EN/ES)", "Bilingüe (EN/ES)")}</li>
-                <li>✅ {t("Clean, labeled cabling", "Cableado prolijo y etiquetado")}</li>
-                <li>✅ {t("Same-day options", "Opciones el mismo día")}</li>
-              </ul>
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+                {stats.map((item) => (
+                  <div
+                    key={item.label}
+                    className="rounded-2xl bg-white px-4 py-3 shadow-sm ring-1 ring-brand-navy/10"
+                  >
+                    <div className="text-xs uppercase tracking-wide text-ink-500">
+                      {item.label}
+                    </div>
+                    <div className="text-2xl font-bold text-brand-navy">{item.value}</div>
+                    <div className="text-sm text-ink-600">{item.detail}</div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <aside className="card-surface">
-              <div className="p-6 md:p-8">
-                <h3 className="text-xl font-bold text-ink-900">
-                  {t("Featured Packages", "Paquetes destacados")}
-                </h3>
-                <div className="mt-4 grid gap-4">
-                  {packages.map((p, i) => (
-                    <div
-                      key={i}
-                      className="rounded-2xl bg-white p-4 shadow-sm border border-brand-navy/10"
-                    >
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-semibold text-ink-900">{p.title}</h4>
-                        <span className="font-extrabold text-brand-orange">{p.price}</span>
-                      </div>
-                      <p className="text-sm text-ink-500 mt-1">{p.bullet}</p>
-                    </div>
-                  ))}
+            <aside className="relative">
+              <div className="card-surface border border-brand-navy/10 bg-white p-6 shadow-xl ring-1 ring-brand-navy/5">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-ink-500">
+                      {t("Fast availability", "Disponibilidad rápida")}
+                    </p>
+                    <h3 className="text-xl font-bold text-ink-900">
+                      {t("Same-week installs", "Instalaciones en la semana")}
+                    </h3>
+                    <p className="text-sm text-ink-500">
+                      {t("North Jersey • Bilingual EN/ES", "Norte de NJ • Bilingüe EN/ES")}
+                    </p>
+                  </div>
+                  <div className="rounded-full bg-brand-orange/10 px-3 py-2 text-sm font-semibold text-brand-orange">
+                    {t("Licensed & insured", "Con licencia y seguro")}
+                  </div>
+                </div>
+
+                <div className="mt-4 grid gap-3 text-sm text-ink-700">
+                  <div className="rounded-xl bg-brand-orange/5 p-3">
+                    {t("We arrive with testers, patch cords, and mounting hardware.", "Llegamos con testers, patch cords y herrajes.")}
+                  </div>
+                  <div className="rounded-xl bg-brand-navy/5 p-3">
+                    {t("Photos and labeling included for simple future changes.", "Incluimos fotos y etiquetado para cambios simples.")}
+                  </div>
+                </div>
+
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <a href="tel:+12012757451" className="btn btn-outline-dark">
+                    {t("Talk to a technician", "Habla con un técnico")}
+                  </a>
+                  <a
+                    href="https://g.page/r/Ca8MnC9PLM60EAE/review"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary"
+                  >
+                    {t("See Google reviews", "Ver reseñas en Google")}
+                  </a>
                 </div>
               </div>
             </aside>
           </div>
         </section>
 
-        {/* SERVICES – integrated catalog */}
-        <section id="services" className="mx-auto max-w-6xl px-4 py-14">
-          <h2 className="text-2xl md:text-3xl font-extrabold">
-            {t("Service Categories", "Categorías de servicio")}
-          </h2>
-          <p className="text-brand-cream/90 mt-2">
-            {t(
-              "Hands-on tech work. No high-voltage, major plumbing, or structural jobs.",
-              "Trabajo técnico práctico. Sin alta tensión, plomería mayor ni estructura."
-            )}
-          </p>
-
-          <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((s) => (
-              <article key={s.id} id={s.id} className="card-surface p-6 text-ink-900 scroll-mt-20">
-                <header className="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="text-lg font-bold">{s.title}</h3>
-                    {s.subtitle && <p className="text-ink-500 mt-0.5">{s.subtitle}</p>}
-                  </div>
-                  <a href="#contact" className="btn btn-primary whitespace-nowrap">
-                    {t("Get a Quote", "Pedir cotización")}
-                  </a>
-                </header>
-
-                <ul className="mt-4 space-y-2 text-ink-700">
-                  {s.bullets.map((b, i) => (
-                    <li key={i} className="flex gap-2">
-                      <span aria-hidden>•</span>
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
+        {/* MICRO HIGHLIGHTS */}
+        <section className="-mt-16 mx-auto max-w-6xl px-4 pb-6">
+          <div className="grid gap-4 md:grid-cols-4">
+            {microHighlights.map((text) => (
+              <div key={text} className="card-surface bg-white p-4">
+                <p className="text-sm text-ink-700">{text}</p>
+              </div>
             ))}
           </div>
         </section>
 
-        {/* AREAS */}
-        <section
-          id="areas"
-          className="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-[1fr_3fr] gap-12 scroll-mt-20"
-        >
-          {/* TEXTO */}
-          <div>
-            <h2 className="text-2xl font-semibold mb-6">Service Areas</h2>
-            <ul className="space-y-3 opacity-90 text-lg">
-              <li>North Jersey</li>
-              <li>Jersey City</li>
-              <li>Hoboken</li>
-              <li>Kearny</li>
-              <li>Newark</li>
-              <li>Elizabeth</li>
-              <li>Hackensack</li>
-              <li>Clifton</li>
-              <li>Union City</li>
-              <li>North Bergen</li>
-              <li>Bayonne</li>
-            </ul>
+        {/* QUICK LINKS TO PRACTICE PAGES */}
+        <section id="services" className="mx-auto max-w-6xl px-4 py-12">
+          <div className="flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between">
+            <div>
+              <h2 className="text-2xl font-extrabold md:text-3xl">
+                {t("Choose what you need", "Elige lo que necesitas")}
+              </h2>
+              <p className="text-ink-600">
+                {t("Short visits or full installs. We keep it tidy and labeled.", "Visitas cortas o instalaciones completas. Todo prolijo y etiquetado.")}
+              </p>
+            </div>
+            <a href="/contact" className="btn btn-outline-dark">
+              {t("Talk to us", "Hablemos")}
+            </a>
           </div>
 
-          {/* MAPA */}
-          <div className="relative z-0 h-[540px] w-full rounded-2xl overflow-hidden shadow-lg">
-  <ServiceAreaMap />
-</div>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {quickLinks.map((item) => (
+              <a key={item.title} href={item.href} className="card-surface block bg-white p-6 transition hover:-translate-y-1 hover:shadow-md">
+                <h3 className="text-lg font-bold text-ink-900">{item.title}</h3>
+                <p className="mt-2 text-sm text-ink-600">{item.desc}</p>
+                <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-orange">
+                  {t("View details", "Ver detalles")} →
+                </span>
+              </a>
+            ))}
+          </div>
         </section>
 
-        {/* CONTACT */}
-        <section id="contact" className="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-2 gap-12">
-          {/* LEFT SIDE = contact details */}
+        {/* SERVICE AREAS */}
+        <section
+          id="areas"
+          className="mx-auto max-w-6xl grid gap-10 px-4 pb-16 md:grid-cols-[1fr_1.2fr] scroll-mt-20"
+        >
           <div className="space-y-4">
-            <h2 className="text-2xl md:text-3xl font-semibold">Contact Us</h2>
-            <p className="opacity-80">📍 Serving North Jersey • Bilingual (EN/ES)</p>
-            <p className="opacity-80">📞 (201) 275-7451</p>
-            <p className="opacity-80">✉️ info@hudsonsmartinstalls.com</p>
-
-            <div className="flex gap-3 mt-4">
-              <a href="tel:+12012757451" className="btn btn-primary">Call</a>
-              <a
-                href="https://wa.me/+12012757451"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn bg-green-600 hover:bg-green-700 text-white"
-              >
-                WhatsApp
-              </a>
+            <p className="text-xs uppercase tracking-[0.2em] text-brand-orange/80">
+              {t("Service areas", "Zonas de servicio")}
+            </p>
+            <h2 className="text-2xl font-extrabold md:text-3xl">
+              {t("North Jersey coverage", "Cobertura en el norte de NJ")}
+            </h2>
+            <p className="text-ink-600">
+              {t(
+                "Hudson, Essex, and Bergen counties prioritized for quick arrival.",
+                "Hudson, Essex y Bergen priorizados para llegada rápida."
+              )}
+            </p>
+            <div className="grid grid-cols-2 gap-3 text-sm text-ink-700">
+              {["Jersey City", "Hoboken", "Kearny", "Newark", "Elizabeth", "Hackensack", "Clifton", "Union City", "North Bergen", "Bayonne"].map((city) => (
+                <div key={city} className="rounded-lg bg-white/80 px-3 py-2 shadow-sm ring-1 ring-brand-navy/5">
+                  {city}
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* RIGHT SIDE = form (handled internally) */}
-          <div>
+          <div className="relative z-0 h-[420px] w-full overflow-hidden rounded-2xl shadow-xl ring-1 ring-brand-navy/10">
+            <ServiceAreaMap />
+          </div>
+        </section>
+
+        {/* CONTACT */}
+        <section
+          id="contact"
+          className="mx-auto max-w-6xl grid gap-8 px-4 pb-16 md:grid-cols-[1.05fr_1fr]"
+        >
+          <div className="space-y-4">
+            <h2 className="text-2xl font-extrabold md:text-3xl">{t("Tell us what you need", "Cuéntanos qué necesitas")}</h2>
+            <p className="text-ink-600">
+              {t(
+                "Describe the space and what isn’t working. We reply with timing and a simple plan.",
+                "Describe el espacio y qué no funciona. Respondemos con tiempo y un plan simple."
+              )}
+            </p>
+
+            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-brand-navy/10">
+              <p className="text-sm font-semibold text-ink-900">{t("Direct contacts", "Contactos directos")}</p>
+              <div className="mt-2 grid gap-2 text-sm text-ink-700">
+                <a href="tel:+12012757451" className="hover:text-brand-orange">
+                  📞 (201) 275-7451
+                </a>
+                <a href="mailto:info@hudsonsmartinstalls.com" className="hover:text-brand-orange">
+                  ✉️ info@hudsonsmartinstalls.com
+                </a>
+                <a
+                  href="https://wa.me/+12012757451"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-brand-orange"
+                >
+                  💬 WhatsApp
+                </a>
+              </div>
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-orange/10 px-3 py-1 text-xs font-semibold text-brand-orange">
+                {t("Same-week installs available", "Instalaciones en la semana disponibles")}
+              </div>
+            </div>
+          </div>
+
+          <div className="card-surface bg-brand-navy text-brand-cream p-6 shadow-xl">
             <ContactForm />
+            <a
+              href="https://g.page/r/Ca8MnC9PLM60EAE/review"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/20"
+            >
+              ⭐ {t("Leave a Google review", "Deja una reseña en Google")}
+            </a>
           </div>
         </section>
       </div>
