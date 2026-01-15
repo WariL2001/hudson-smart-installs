@@ -51,13 +51,12 @@ export default function Page() {
     },
     {
       label: t("Since", "Desde"),
-      value: "2018",
+      value: "2024",
       detail: t("Low-voltage + smart installs", "Instalaciones de bajo voltaje + smart"),
     },
   ];
 
   const microHighlights = [
-    t("Licensed, insured, and bilingual (EN/ES)", "Con licencia, seguro y bilingüe (EN/ES)"),
     t("Same-week installs when slots are open", "Instalaciones en la semana si hay cupo"),
     t("Photos and labeling so future changes are easy", "Fotos y etiquetado para cambios futuros"),
     t("Hudson, Essex, Bergen focus", "Enfocados en Hudson, Essex, Bergen"),
@@ -140,9 +139,6 @@ export default function Page() {
                     <p className="text-sm text-ink-500">
                       {t("North Jersey • Bilingual EN/ES", "Norte de NJ • Bilingüe EN/ES")}
                     </p>
-                  </div>
-                  <div className="rounded-full bg-brand-orange/10 px-3 py-2 text-sm font-semibold text-brand-orange">
-                    {t("Licensed & insured", "Con licencia y seguro")}
                   </div>
                 </div>
 

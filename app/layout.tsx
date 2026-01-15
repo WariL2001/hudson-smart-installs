@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 
 import "./globals.css";
 import type { Metadata } from "next";
@@ -69,6 +70,20 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-6OPTD9YS3F"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-6OPTD9YS3F');
+          `}
+        </Script>
+      </head>
       <body className="relative min-h-screen bg-brand-cream text-ink-900">
 
         <a href="#main" className="skip-link">Skip to content</a>

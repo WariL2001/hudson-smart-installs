@@ -100,9 +100,6 @@ export default function SmartHomeOfficePage() {
                 <h3 className="text-xl font-bold text-ink-900">We prep, mount, and connect</h3>
                 <p className="text-sm text-ink-500">Power, Wi-Fi, and app access are confirmed before we leave.</p>
               </div>
-              <span className="rounded-full bg-brand-orange/10 px-3 py-1 text-xs font-semibold text-brand-orange">
-                Licensed & insured
-              </span>
             </div>
             <div className="mt-4 space-y-2 text-sm text-ink-700">
               <div className="rounded-xl bg-brand-orange/5 p-3">We bring adapters, low-voltage cabling, plates, and mounting hardware.</div>
