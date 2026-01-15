@@ -70,12 +70,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head>
+      <body className="relative min-h-screen bg-brand-cream text-ink-900">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-6OPTD9YS3F"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -83,8 +83,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gtag('config', 'G-6OPTD9YS3F');
           `}
         </Script>
-      </head>
-      <body className="relative min-h-screen bg-brand-cream text-ink-900">
 
         <a href="#main" className="skip-link">Skip to content</a>
 
