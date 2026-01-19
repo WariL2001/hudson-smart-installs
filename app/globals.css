@@ -5,14 +5,16 @@
 
 /* ===== Brand tokens (Tailwind v4) ===== */
 @theme {
-  --color-brand-navy:   #0D1B2A;
+  --color-brand-navy:   #0B1C2B;
   --color-brand-orange: #FF7A00;
-  --color-brand-cream:  #FFF7EB;
+  --color-brand-cream:  #F6F1E9;
+  --color-brand-mist:   #E7EEF2;
+  --color-brand-slate:  #1A3B4F;
 
   /* optional neutrals tuned for accessibility on brand surfaces */
-  --color-ink-900: #0b1320;   /* headings on light */
-  --color-ink-700: #243447;   /* body on light */
-  --color-ink-500: #516173;   /* secondary text on light */
+  --color-ink-900: #0B1520;   /* headings on light */
+  --color-ink-700: #273646;   /* body on light */
+  --color-ink-500: #536474;   /* secondary text on light */
 }
 
 /* ===== Base resets & helpers ===== */
@@ -22,6 +24,8 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 body {
   background-color: var(--color-brand-cream) !important;
   color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  letter-spacing: 0.01em;
 }
 
 img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
@@ -38,6 +42,8 @@ img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
 /* Motion respect */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none!important; transition: none!important; scroll-behavior: auto!important; }
+  .reveal-up,
+  .reveal-fade { opacity: 1 !important; }
 }
 
 /* Skip link */
@@ -48,23 +54,23 @@ img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
 }
 .skip-link:focus-visible { top: .5rem; left: .5rem; z-index: 50; }
 
-/* Card surface – readable on gradient */
+/* Card surface - readable on gradient */
 .card-surface {
-  @apply bg-white/90 backdrop-blur-sm shadow-sm rounded-2xl border border-brand-navy/10;
+  @apply bg-white/95 backdrop-blur-sm shadow-sm rounded-2xl border border-brand-navy/10;
 }
 
 /* Primary/Secondary buttons */
 .btn {
-  @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-semibold select-none;
+  @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 font-semibold select-none transition;
 }
 .btn-primary {
-  @apply bg-brand-orange text-white hover:opacity-90 active:opacity-100;
+  @apply bg-brand-orange text-white shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0;
 }
 .btn-ghost {
   @apply border border-white/30 text-white hover:bg-white/10;
 }
 .btn-outline-dark {
-  @apply border border-brand-navy/20 text-brand-navy hover:bg-brand-cream;
+  @apply border border-brand-navy/20 text-brand-navy hover:bg-white;
 }
 
 /* --- Keep Leaflet map layers below navbar --- */
@@ -77,7 +83,7 @@ img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
   z-index: 500 !important; /* controls above tiles, still under navbar */
 }
 
-/* === HUDSON SMART INSTALLS · TECH LINES HERO === */
+/* === HUDSON SMART INSTALLS - TECH LINES HERO === */
 
 .hero-tech-shell {
   position: relative;
@@ -88,8 +94,8 @@ img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
 /* SVG container behind the logo */
 .hero-tech-lines {
   position: absolute;
-  inset: -5%;        /* acercamos las líneas al logo */
-  opacity: 0.85;     /* mucho más visible en fondo claro */
+  inset: -5%;        /* acercamos las lineas al logo */
+  opacity: 0.85;     /* mucho mas visible en fondo claro */
   pointer-events: none;
 }
 
@@ -125,7 +131,7 @@ img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
   right: -8px;
   bottom: -8px;
   height: 3px;
-  background: linear-gradient(90deg, rgba(13, 27, 42, 0.12), rgba(255, 122, 0, 0.6), rgba(13, 27, 42, 0.12));
+  background: linear-gradient(90deg, rgba(11, 28, 43, 0.12), rgba(255, 122, 0, 0.6), rgba(11, 28, 43, 0.12));
   background-size: 200% 100%;
   border-radius: 999px;
   animation: nav-wave 10s ease-in-out infinite;
@@ -186,4 +192,103 @@ img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
   top: 30%;
   left: 20%;
   background: radial-gradient(circle at 50% 50%, rgba(13, 27, 42, 0.08), transparent 70%);
+}
+
+/* ===== New redesign utilities ===== */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.hero-surface {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 120% at 85% -10%, rgba(255, 122, 0, 0.2), transparent 60%),
+    radial-gradient(100% 120% at 10% 0%, rgba(26, 59, 79, 0.18), transparent 55%),
+    linear-gradient(180deg, #f7f3ec 0%, #f1ede4 100%);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(11, 28, 43, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(11, 28, 43, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at 15% 10%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0) 70%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(40px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.hero-orb.a {
+  width: 340px;
+  height: 340px;
+  top: -140px;
+  right: -80px;
+  background: rgba(255, 122, 0, 0.35);
+  animation: float-slow 16s ease-in-out infinite;
+}
+
+.hero-orb.b {
+  width: 260px;
+  height: 260px;
+  bottom: -140px;
+  left: -60px;
+  background: rgba(26, 59, 79, 0.28);
+  animation: float-slow 18s ease-in-out infinite reverse;
+}
+
+.tag-pill {
+  @apply inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-brand-navy shadow-sm ring-1 ring-brand-navy/10;
+}
+
+.reveal-up {
+  opacity: 0;
+  animation: fade-up 0.9s ease forwards;
+}
+
+.reveal-fade {
+  opacity: 0;
+  animation: fade-in 1s ease forwards;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float-slow {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(12px) translateX(-8px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
 }

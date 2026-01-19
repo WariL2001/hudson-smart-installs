@@ -1,333 +1,454 @@
-"use client";
-
-import { useState } from "react";
-import dynamic from "next/dynamic";
+import Link from "next/link";
+import Image from "next/image";
+import type { Metadata } from "next";
 import ContactForm from "./components/ContactForm";
 
-const ServiceAreaMap = dynamic(
-  () => import("./components/ServiceAreaMap"),
-  { ssr: false, loading: () => <div className="h-[420px] w-full rounded-2xl bg-black/5 animate-pulse" /> }
-);
+export const metadata: Metadata = {
+  title: "Low Voltage Installation in North Jersey | Hudson Smart Installs",
+  description:
+    "Low-voltage installation and maintenance for homes and small businesses in North Jersey. Security cameras, structured cabling, smart home devices, access control, TV mounting, and more.",
+};
 
-/**
- * Hudson Smart Installs — refreshed home
- * - Bold hero with stats and trust signals
- * - Clear packages + bilingual catalog
- * - Process, service area map, and contact card
- */
+const services = [
+  {
+    id: "security-cameras",
+    title: "Security Camera Systems",
+    description:
+      "Indoor and outdoor CCTV with DVR/NVR setup, remote viewing apps, and clean cable runs.",
+    image: "/services/security-camera.svg",
+    imageAlt: "Security camera icon",
+  },
+  {
+    id: "data-cabling",
+    title: "Data Cabling and Network Wiring",
+    description:
+      "Cat5e/Cat6/Cat6A and fiber runs, patch panels, labeling, and testing for reliable speed.",
+    image: "/services/data-cabling.svg",
+    imageAlt: "Data cabling icon",
+  },
+  {
+    id: "smart-home",
+    title: "Smart Home Devices",
+    description:
+      "Doorbells, thermostats, lighting, and speakers connected to Wi-Fi with simple app setup.",
+    image: "/services/smart-home.svg",
+    imageAlt: "Smart home icon",
+  },
+  {
+    id: "access-control",
+    title: "Access Control Systems",
+    description:
+      "Keypads, intercoms, and door buzzers installed for secure entry in homes and offices.",
+    image: "/services/access-control.svg",
+    imageAlt: "Access control icon",
+  },
+  {
+    id: "tv-mounting",
+    title: "TV Mounting and Cable Management",
+    description:
+      "Secure wall mounting with hidden or neatly managed cables and clean device hookups.",
+    image: "/services/tv-mounting.svg",
+    imageAlt: "TV mounting icon",
+  },
+  {
+    id: "low-voltage",
+    title: "Low-Voltage Electrical Work",
+    description:
+      "Patch panels, device rewiring, and tidy jack installs to keep systems safe and organized.",
+    image: "/services/low-voltage.svg",
+    imageAlt: "Low-voltage panel icon",
+  },
+];
+
+const highlights = [
+  {
+    title: "Neat, labeled work",
+    body: "Every run is organized and labeled so future changes are easy and safe.",
+  },
+  {
+    title: "Fast, clear communication",
+    body: "We return calls quickly, arrive on time, and explain everything before we leave.",
+  },
+  {
+    title: "Built for homes and small businesses",
+    body: "We design installs that keep households secure and offices running without downtime.",
+  },
+  {
+    title: "Trusted local service",
+    body: "5.0 Google rating and a focus on clean work that lasts.",
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "They wired our office with Cat6 and installed cameras in one visit. Everything was labeled and tested.",
+    name: "Alex R.",
+    location: "Newark, NJ",
+  },
+  {
+    quote:
+      "Our doorbell and smart thermostat were set up quickly, and the app walkthrough was easy to follow.",
+    name: "Maria L.",
+    location: "Hoboken, NJ",
+  },
+  {
+    quote:
+      "Great TV mount with hidden cables. Clean finish and no mess left behind.",
+    name: "Bryan K.",
+    location: "Jersey City, NJ",
+  },
+];
+
+const gallery = [
+  {
+    src: "/images/hs2.png",
+    title: "Structured cabling in progress",
+    body: "Rack work with clean terminations and testing.",
+  },
+  {
+    src: "/images/hs3.png",
+    title: "Smart home device setup",
+    body: "Connected hubs and devices staged for setup.",
+  },
+  {
+    src: "/images/hs1.png",
+    title: "On-site service visit",
+    body: "Arrive prepared with tools and a clear plan.",
+  },
+];
 
 export default function Page() {
-  const [lang, setLang] = useState<"en" | "es">("en");
-  const t = (en: string, es: string) => (lang === "en" ? en : es);
-
-  const quickLinks = [
-    {
-      title: t("Networking & Cabling", "Redes y cableado"),
-      desc: t("Clean, labeled runs, Wi-Fi tuning, and tidy racks.", "Tendidos limpios, Wi-Fi ajustado y racks prolijos."),
-      href: "/networking-cabling",
-    },
-    {
-      title: t("Smart Home & Office", "Hogar y oficina inteligente"),
-      desc: t("Locks, cameras, lighting, thermostats, and app setup.", "Cerraduras, cámaras, iluminación, termostatos y apps."),
-      href: "/smart-home-office",
-    },
-    {
-      title: t("IT Support", "Soporte IT"),
-      desc: t("Remote help first, on-site when needed. Bilingual.", "Remoto primero, en sitio si hace falta. Bilingüe."),
-      href: "/it-support",
-    },
-  ];
-
-  const stats = [
-    {
-      label: t("Avg response", "Tiempo medio de respuesta"),
-      value: "<24h",
-      detail: t("Calls returned same day", "Devolvemos llamadas el mismo día"),
-    },
-    {
-      label: t("Google rating", "Calificación en Google"),
-      value: "5.0",
-      detail: t("Neighbors and small businesses", "Vecinos y pequeños negocios"),
-    },
-    {
-      label: t("Since", "Desde"),
-      value: "2024",
-      detail: t("Low-voltage + smart installs", "Instalaciones de bajo voltaje + smart"),
-    },
-  ];
-
-  const microHighlights = [
-    t("Same-week installs when slots are open", "Instalaciones en la semana si hay cupo"),
-    t("Photos and labeling so future changes are easy", "Fotos y etiquetado para cambios futuros"),
-    t("Hudson, Essex, Bergen focus", "Enfocados en Hudson, Essex, Bergen"),
-  ];
-
   return (
-    <>
-      <div className="bg-brand-cream text-ink-900">
-        {/* HERO */}
-        <section className="relative overflow-hidden bg-brand-cream text-ink-900">
-          <div className="mesh-shell" aria-hidden>
-            <div className="mesh mesh-a" />
-            <div className="mesh mesh-b" />
-            <div className="mesh mesh-c" />
-          </div>
+    <div className="bg-brand-cream text-ink-900">
+      <section className="hero-surface">
+        <div className="hero-grid" aria-hidden />
+        <div className="hero-orb a" aria-hidden />
+        <div className="hero-orb b" aria-hidden />
 
-          <div className="relative mx-auto grid max-w-6xl items-start gap-12 px-4 py-16 md:grid-cols-[1.2fr_0.95fr] md:py-24">
+        <div className="relative mx-auto max-w-6xl px-4 py-16 md:py-24">
+          <div className="grid gap-12 md:grid-cols-[1.1fr_0.9fr] md:items-start">
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-brand-navy ring-1 ring-brand-navy/10 shadow-sm">
-                <span>Hudson Smart Installs</span>
-                <span className="h-[1px] w-6 bg-brand-orange/80" />
-                <span>{t("North Jersey", "Norte de Nueva Jersey")}</span>
-              </div>
-
-              <h1 className="text-4xl font-extrabold leading-tight text-brand-navy md:text-6xl">
-                {t("Tech installs done neatly, labeled, and explained.", "Instalaciones tecnológicas prolijas, etiquetadas y explicadas.")}
+              <span className="tag-pill">Low-voltage installations</span>
+              <h1 className="font-display text-4xl font-semibold leading-tight text-brand-navy md:text-6xl">
+                Low-Voltage Tech Installations Done Right in North Jersey
               </h1>
               <p className="text-lg text-ink-700">
-                {t(
-                  "Networking, smart devices, cameras, and IT support for North Jersey. Quick response, bilingual, and tidy work.",
-                  "Redes, dispositivos inteligentes, cámaras y soporte IT en el norte de NJ. Respuesta rápida, bilingüe y trabajo prolijo."
-                )}
+                Professional installation of security cameras, structured cabling, smart home devices,
+                access control, and TV mounting for homeowners and small businesses.
               </p>
 
               <div className="flex flex-wrap gap-3">
-                <a href="#contact" className="btn btn-primary">
-                  {t("Book a visit", "Agenda una visita")}
-                </a>
+                <Link href="/contact" className="btn btn-primary">
+                  Request a Free Quote
+                </Link>
                 <a href="tel:+12012757451" className="btn btn-outline-dark">
-                  {t("Call", "Llamar")}
+                  Call Now: (201) 275-7451
                 </a>
-                <a href="https://wa.me/12012757451" className="btn btn-outline-dark" aria-label="WhatsApp">
-                  WhatsApp
-                </a>
-                <button
-                  onClick={() => setLang(lang === "en" ? "es" : "en")}
-                  className="btn btn-outline-dark"
-                  aria-label="Toggle language English/Spanish"
-                >
-                  {lang === "en" ? "ES" : "EN"}
-                </button>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-                {stats.map((item) => (
+              <div className="grid gap-3 sm:grid-cols-3">
+                {[
+                  { label: "Response", value: "Within 24h" },
+                  { label: "Since", value: "2024" },
+                  { label: "Rating", value: "5.0 Google" },
+                ].map((item) => (
                   <div
                     key={item.label}
-                    className="rounded-2xl bg-white px-4 py-3 shadow-sm ring-1 ring-brand-navy/10"
+                    className="rounded-2xl bg-white/90 px-4 py-3 text-sm shadow-sm ring-1 ring-brand-navy/10"
                   >
-                    <div className="text-xs uppercase tracking-wide text-ink-500">
-                      {item.label}
-                    </div>
-                    <div className="text-2xl font-bold text-brand-navy">{item.value}</div>
-                    <div className="text-sm text-ink-600">{item.detail}</div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-ink-500">{item.label}</p>
+                    <p className="mt-1 text-lg font-semibold text-brand-navy">{item.value}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <aside className="relative">
-              <div className="card-surface border border-brand-navy/10 bg-white p-6 shadow-xl ring-1 ring-brand-navy/5">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-ink-500">
-                      {t("Fast availability", "Disponibilidad rápida")}
-                    </p>
-                    <h3 className="text-xl font-bold text-ink-900">
-                      {t("Same-week installs", "Instalaciones en la semana")}
-                    </h3>
-                    <p className="text-sm text-ink-500">
-                      {t("North Jersey • Bilingual EN/ES", "Norte de NJ • Bilingüe EN/ES")}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-4 grid gap-3 text-sm text-ink-700">
-                  <div className="rounded-xl bg-brand-orange/5 p-3">
-                    {t("We arrive with testers, patch cords, and mounting hardware.", "Llegamos con testers, patch cords y herrajes.")}
-                  </div>
-                  <div className="rounded-xl bg-brand-navy/5 p-3">
-                    {t("Photos and labeling included for simple future changes.", "Incluimos fotos y etiquetado para cambios simples.")}
-                  </div>
-                </div>
-
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <a href="tel:+12012757451" className="btn btn-outline-dark">
-                    {t("Talk to a technician", "Habla con un técnico")}
-                  </a>
-                  <a
-                    href="https://g.page/r/Ca8MnC9PLM60EAE/review"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary"
-                  >
-                    {t("See Google reviews", "Ver reseñas en Google")}
-                  </a>
+            <div className="space-y-6">
+              <div className="relative h-[320px] overflow-hidden rounded-3xl shadow-lg ring-1 ring-brand-navy/10 md:h-[420px]">
+                <Image
+                  src="/images/hs1.png"
+                  alt="Technician arriving for a low-voltage installation"
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-brand-navy/10 to-transparent" />
+                <div className="absolute bottom-4 left-4 text-white">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
+                    Recent install
+                  </p>
+                  <p className="font-display text-xl font-semibold">Outdoor security camera setup</p>
                 </div>
               </div>
-            </aside>
-          </div>
-        </section>
 
-        {/* MICRO HIGHLIGHTS */}
-        <section className="-mt-16 mx-auto max-w-6xl px-4 pb-6">
-          <div className="grid gap-4 md:grid-cols-4">
-            {microHighlights.map((text) => (
-              <div key={text} className="card-surface bg-white p-4">
-                <p className="text-sm text-ink-700">{text}</p>
+              <aside className="card-surface bg-white p-6 shadow-xl">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-500">
+                  Service focus
+                </p>
+                <h2 className="mt-2 font-display text-2xl font-semibold text-brand-navy">
+                  Low-voltage installs for every space
+                </h2>
+                <p className="mt-2 text-sm text-ink-700">
+                  Whether you are a homeowner or a small business owner, we plan clean routes, test every
+                  connection, and leave the site tidy.
+                </p>
+                <ul className="mt-4 space-y-3 text-sm text-ink-700">
+                  {services.slice(0, 4).map((service) => (
+                    <li key={service.id} className="flex items-start gap-3">
+                      <span className="mt-1 h-2 w-2 rounded-full bg-brand-orange" aria-hidden />
+                      <span>{service.title}</span>
+                    </li>
+                  ))}
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-brand-orange" aria-hidden />
+                    <span>TV mounting and cable management</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-brand-orange" aria-hidden />
+                    <span>Low-voltage electrical fixes and tidy-ups</span>
+                  </li>
+                </ul>
+                <Link href="/services" className="mt-6 inline-flex btn btn-outline-dark">
+                  Explore all services
+                </Link>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-500">Services</p>
+            <h2 className="font-display text-3xl font-semibold text-brand-navy md:text-4xl">
+              Core low-voltage services
+            </h2>
+          </div>
+          <Link href="/services" className="btn btn-outline-dark">
+            See service details
+          </Link>
+        </div>
+
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          {services.map((service, index) => (
+            <Link
+              key={service.id}
+              href={`/services#${service.id}`}
+              className="card-surface bg-white p-6 transition hover:-translate-y-1 hover:shadow-md reveal-up"
+              style={{ animationDelay: `${index * 80}ms` }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-mist/70 text-brand-orange">
+                  <Image src={service.image} alt={service.imageAlt} width={28} height={28} />
+                </div>
+                <h3 className="font-display text-xl font-semibold text-brand-navy">{service.title}</h3>
               </div>
-            ))}
-          </div>
-        </section>
+              <p className="mt-2 text-sm text-ink-700">{service.description}</p>
+              <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-orange">
+                Learn more
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
-        {/* QUICK LINKS TO PRACTICE PAGES */}
-        <section id="services" className="mx-auto max-w-6xl px-4 py-12">
-          <div className="flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between">
-            <div>
-              <h2 className="text-2xl font-extrabold md:text-3xl">
-                {t("Choose what you need", "Elige lo que necesitas")}
+      <section className="bg-brand-mist/70">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="grid gap-8 md:grid-cols-[1fr_1.1fr] md:items-start">
+            <div className="space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-500">Why choose us</p>
+              <h2 className="font-display text-3xl font-semibold text-brand-navy md:text-4xl">
+                Clean installs, reliable performance
               </h2>
-              <p className="text-ink-600">
-                {t("Short visits or full installs. We keep it tidy and labeled.", "Visitas cortas o instalaciones completas. Todo prolijo y etiquetado.")}
+              <p className="text-sm text-ink-700">
+                We focus on safe, tidy, and well-tested installations. You get a system that works and
+                a walkthrough that makes it easy to use.
               </p>
             </div>
-            <a href="/contact" className="btn btn-outline-dark">
-              {t("Talk to us", "Hablemos")}
-            </a>
-          </div>
-
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {quickLinks.map((item) => (
-              <a key={item.title} href={item.href} className="card-surface block bg-white p-6 transition hover:-translate-y-1 hover:shadow-md">
-                <h3 className="text-lg font-bold text-ink-900">{item.title}</h3>
-                <p className="mt-2 text-sm text-ink-600">{item.desc}</p>
-                <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-orange">
-                  {t("View details", "Ver detalles")} →
-                </span>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        {/* SERVICE AREAS */}
-        <section
-          id="areas"
-          className="mx-auto max-w-6xl grid gap-10 px-4 pb-16 md:grid-cols-[1fr_1.2fr] scroll-mt-20"
-        >
-          <div className="space-y-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-brand-orange/80">
-              {t("Service areas", "Zonas de servicio")}
-            </p>
-            <h2 className="text-2xl font-extrabold md:text-3xl">
-              {t("North Jersey coverage", "Cobertura en el norte de NJ")}
-            </h2>
-            <p className="text-ink-600">
-              {t(
-                "Hudson, Essex, and Bergen counties prioritized for quick arrival.",
-                "Hudson, Essex y Bergen priorizados para llegada rápida."
-              )}
-            </p>
-            <div className="grid grid-cols-2 gap-3 text-sm text-ink-700">
-              {["Jersey City", "Hoboken", "Kearny", "Newark", "Elizabeth", "Hackensack", "Clifton", "Union City", "North Bergen", "Bayonne"].map((city) => (
-                <div key={city} className="rounded-lg bg-white/80 px-3 py-2 shadow-sm ring-1 ring-brand-navy/5">
-                  {city}
+            <div className="grid gap-4 sm:grid-cols-2">
+              {highlights.map((item, index) => (
+                <div
+                  key={item.title}
+                  className="card-surface bg-white p-4 reveal-up"
+                  style={{ animationDelay: `${index * 90}ms` }}
+                >
+                  <h3 className="text-sm font-semibold text-brand-navy">{item.title}</h3>
+                  <p className="mt-2 text-sm text-ink-700">{item.body}</p>
                 </div>
               ))}
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="relative z-0 h-[420px] w-full overflow-hidden rounded-2xl shadow-xl ring-1 ring-brand-navy/10">
-            <ServiceAreaMap />
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-500">Recent installs</p>
+            <h2 className="font-display text-3xl font-semibold text-brand-navy md:text-4xl">
+              Real work, clean finishes
+            </h2>
           </div>
-        </section>
+          <Link href="/contact" className="btn btn-outline-dark">
+            Request a quote
+          </Link>
+        </div>
 
-        {/* CONTACT */}
-        <section
-          id="contact"
-          className="mx-auto max-w-6xl grid gap-8 px-4 pb-16 md:grid-cols-[1.05fr_1fr]"
-        >
-          <div className="space-y-4">
-            <h2 className="text-2xl font-extrabold md:text-3xl">{t("Tell us what you need", "Cuéntanos qué necesitas")}</h2>
-            <p className="text-ink-600">
-              {t(
-                "Describe the space and what isn’t working. We reply with timing and a simple plan.",
-                "Describe el espacio y qué no funciona. Respondemos con tiempo y un plan simple."
-              )}
-            </p>
-
-            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-brand-navy/10">
-              <p className="text-sm font-semibold text-ink-900">{t("Direct contacts", "Contactos directos")}</p>
-              <div className="mt-2 grid gap-2 text-sm text-ink-700">
-                <a href="tel:+12012757451" className="hover:text-brand-orange">
-                  📞 (201) 275-7451
-                </a>
-                <a href="mailto:info@hudsonsmartinstalls.com" className="hover:text-brand-orange">
-                  ✉️ info@hudsonsmartinstalls.com
-                </a>
-                <a
-                  href="https://wa.me/+12012757451"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-brand-orange"
-                >
-                  💬 WhatsApp
-                </a>
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          {gallery.map((item) => (
+            <div
+              key={item.title}
+              className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-lg ring-1 ring-brand-navy/10"
+            >
+              <Image
+                src={item.src}
+                alt={item.title}
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 50vw, 100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/70 via-brand-navy/10 to-transparent" />
+              <div className="absolute bottom-4 left-4 text-white">
+                <p className="text-sm font-semibold">{item.title}</p>
+                <p className="text-xs text-white/80">{item.body}</p>
               </div>
-              <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-orange/10 px-3 py-1 text-xs font-semibold text-brand-orange">
-                {t("Same-week installs available", "Instalaciones en la semana disponibles")}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="card-surface bg-white p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-500">Residential</p>
+            <h3 className="mt-2 font-display text-2xl font-semibold text-brand-navy">
+              Safer, smarter homes
+            </h3>
+            <p className="mt-2 text-sm text-ink-700">
+              We install cameras, doorbells, and smart lighting with clean wiring and easy app setup.
+              Your home stays tidy and your devices stay connected.
+            </p>
+            <ul className="mt-4 space-y-2 text-sm text-ink-700">
+              <li>Clean cable runs and hidden wiring options</li>
+              <li>Simple controls for family and guests</li>
+              <li>Walkthrough before we leave</li>
+            </ul>
+          </div>
+
+          <div className="card-surface bg-white p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-500">Small business</p>
+            <h3 className="mt-2 font-display text-2xl font-semibold text-brand-navy">
+              Reliable systems for offices
+            </h3>
+            <p className="mt-2 text-sm text-ink-700">
+              Structured cabling, access control, and camera systems designed to reduce downtime and
+              keep teams productive.
+            </p>
+            <ul className="mt-4 space-y-2 text-sm text-ink-700">
+              <li>Cat6 and fiber runs with patch panels</li>
+              <li>Access control for doors and entry points</li>
+              <li>Neat racks and labeled terminations</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-brand-navy text-white">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+            <div className="space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">Service areas</p>
+              <h2 className="font-display text-3xl font-semibold md:text-4xl">
+                Serving North Jersey homes and small businesses
+              </h2>
+              <p className="text-sm text-white/80">
+                Based in Jersey City, we regularly serve Hudson, Essex, and Bergen counties. If you do
+                not see your town listed, ask us anyway.
+              </p>
+              <p className="text-sm text-white/70">
+                Jersey City, Hoboken, Bayonne, Union City, Newark, Bloomfield, Clifton, Hackensack,
+                Fort Lee, and nearby towns.
+              </p>
+              <Link href="/service-areas" className="btn btn-ghost">
+                View full service area list
+              </Link>
+            </div>
+            <div className="card-surface bg-white/10 p-6 text-white">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">Response time</p>
+              <p className="mt-2 font-display text-2xl font-semibold">Calls returned within 24 hours</p>
+              <p className="mt-2 text-sm text-white/75">
+                We confirm scope, schedule a visit, and arrive with the right hardware to avoid delays.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <a href="tel:+12012757451" className="btn btn-primary">
+                  Call now
+                </a>
+                <Link href="/contact" className="btn btn-ghost">
+                  Request a quote
+                </Link>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="card-surface bg-brand-navy text-brand-cream p-6 shadow-xl">
-            <ContactForm />
-            <a
-              href="https://g.page/r/Ca8MnC9PLM60EAE/review"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/20"
-            >
-              ⭐ {t("Leave a Google review", "Deja una reseña en Google")}
-            </a>
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-500">Testimonials</p>
+            <h2 className="font-display text-3xl font-semibold text-brand-navy md:text-4xl">
+              Clients trust our work
+            </h2>
           </div>
-        </section>
-      </div>
+          <Link href="/testimonials" className="btn btn-outline-dark">
+            Read more reviews
+          </Link>
+        </div>
 
-      {/* JSON-LD: Service area emphasis (SEO) */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            name: "Hudson Smart Installs",
-            areaServed: [
-              "Jersey City",
-              "Newark",
-              "Hoboken",
-              "Elizabeth",
-              "Hackensack",
-              "Clifton",
-              "Union City",
-              "North Bergen",
-              "Bayonne",
-              "Kearny",
-            ],
-            serviceType: [
-              "Networking",
-              "Wi-Fi",
-              "Cabling",
-              "CCTV",
-              "Smart Locks",
-              "TV & AV",
-              "NAS & Backups",
-              "POS & Peripherals",
-              "Smart Home",
-              "Remote Support",
-            ],
-          }),
-        }}
-      />
-    </>
+        <div className="mt-8 grid gap-6 md:grid-cols-3">
+          {testimonials.map((item, index) => (
+            <div
+              key={item.name}
+              className="card-surface bg-white p-5 reveal-up"
+              style={{ animationDelay: `${index * 90}ms` }}
+            >
+              <p className="text-sm text-ink-700">&ldquo;{item.quote}&rdquo;</p>
+              <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
+                {item.name} - {item.location}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-brand-mist/70">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="grid gap-10 md:grid-cols-[1fr_1.1fr] md:items-start">
+            <div className="space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-500">Request a quote</p>
+              <h2 className="font-display text-3xl font-semibold text-brand-navy md:text-4xl">
+                Tell us about your project
+              </h2>
+              <p className="text-sm text-ink-700">
+                Share the location, the equipment you have, and what you want to improve. We will reply
+                with a clear plan and timing options.
+              </p>
+              <ul className="mt-4 space-y-2 text-sm text-ink-700">
+                <li>Low-voltage installation near me for homes or offices</li>
+                <li>Structured cabling in New Jersey with tidy patch panels</li>
+                <li>Home security camera setup in North Jersey</li>
+              </ul>
+            </div>
+
+            <div className="card-surface bg-white p-6">
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

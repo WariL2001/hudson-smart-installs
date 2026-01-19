@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 
-// Importa SOLO tipos para no romper SSR; Leaflet real se carga dinámicamente.
+// Import types only to keep SSR safe; Leaflet loads dynamically.
 import type {
   Map as LeafletMap,
   Control as LeafletControl,
@@ -60,7 +60,7 @@ export default function ServiceAreaMap() {
 
       const map = mapRef.current!;
 
-      // 2) Si ya existían grupos (por doble-montaje), quítalos antes de volver a crearlos
+      // 2) If groups already existed (double-mount), remove before recreating
       if (groupsRef.current) {
         const { core, req } = groupsRef.current;
         core.remove();
@@ -124,7 +124,7 @@ export default function ServiceAreaMap() {
       const coreGroup = L.layerGroup();
       const reqGroup = L.layerGroup();
 
-      const coreIcon = makePin("#0D1B2A");
+      const coreIcon = makePin("#0B1C2B");
       const reqIcon = makePin("#FF7A00");
 
       CORE.forEach((c) => {
@@ -147,8 +147,8 @@ export default function ServiceAreaMap() {
       const COVERAGE_CENTER: [number, number] = [40.75, -74.1];
       const primaryHalo = L.circle(COVERAGE_CENTER, {
         radius: 32000,
-        color: "#0D1B2A",
-        fillColor: "#0D1B2A",
+        color: "#0B1C2B",
+        fillColor: "#0B1C2B",
         fillOpacity: 0.05,
         weight: 1,
         opacity: 0.25,
@@ -179,7 +179,7 @@ export default function ServiceAreaMap() {
       const allBounds = L.latLngBounds(allPts);
       if (allBounds.isValid()) map.fitBounds(allBounds, { padding: [30, 30] });
 
-      // 3) Si ya existía el control, elimínalo (evita duplicado en Strict Mode)
+      // 3) If the control already existed, remove it (avoid duplicate in Strict Mode)
       if (controlRef.current) {
         map.removeControl(controlRef.current);
         controlRef.current = null;
@@ -225,14 +225,14 @@ export default function ServiceAreaMap() {
             <div style="font-weight:600;margin-bottom:6px">Service coverage</div>
             <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer">
               <input id="coreToggle" type="checkbox" checked />
-              ${pin("#0D1B2A")} <span>Core</span>
+              ${pin("#0B1C2B")} <span>Core</span>
             </label>
             <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer">
               <input id="reqToggle" type="checkbox" checked />
               ${pin("#FF7A00")} <span>By request</span>
             </label>
             <button id="fitBtn" type="button"
-              style="width:100%;margin-top:6px;border:none;border-radius:10px;padding:6px 8px;font-weight:600;cursor:pointer;background:#0D1B2A;color:white">
+              style="width:100%;margin-top:6px;border:none;border-radius:10px;padding:6px 8px;font-weight:600;cursor:pointer;background:#0B1C2B;color:white">
               Fit
             </button>
           `;
@@ -328,12 +328,12 @@ export default function ServiceAreaMap() {
     };
   }, []);
 
-  // IMPORTANTE: el padre define la altura; aquí usamos h-full.
+  // IMPORTANT: parent sets the height; we use h-full here.
   return (
     <div className="relative z-0"> {/* keeps the whole map stack under the navbar */}
       <div
         ref={containerRef}
-        className="h-[600px] w-full rounded-2xl overflow-hidden shadow-sm border border-brand-navy/10 z-0"
+        className="h-full w-full rounded-2xl overflow-hidden shadow-sm border border-brand-navy/10 z-0"
       />
     </div>
   );

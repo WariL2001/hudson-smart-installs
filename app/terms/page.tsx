@@ -1,57 +1,66 @@
-export const metadata = {
-  title: "Terms of Service · Hudson Smart Installs",
-  description:
-    "Website terms and conditions for using Hudson Smart Installs services and site.",
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms of Service | Hudson Smart Installs",
+  description: "Terms and conditions for using Hudson Smart Installs services and website.",
 };
 
 export default function TermsPage() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12 text-brand-cream">
-      <h1 className="text-3xl font-bold mb-6">Terms of Service</h1>
-      <p className="opacity-80 mb-8">Effective date: October 2025</p>
+    <div className="bg-brand-cream text-ink-900">
+      <main className="mx-auto max-w-3xl px-4 py-16">
+        <h1 className="font-display text-3xl font-semibold text-brand-navy">Terms of Service</h1>
+        <p className="mt-2 text-sm text-ink-500">Effective date: January 2024</p>
 
-      <section className="space-y-4 leading-relaxed">
-        <p>
-          By using hudsonsmartinstalls.com you agree to these terms.
-        </p>
+        <section className="mt-8 space-y-4 text-sm leading-relaxed text-ink-700">
+          <p>
+            By using hudsonsmartinstalls.com you agree to these terms.
+          </p>
 
-        <h2 className="text-xl font-semibold mt-6">1. Services</h2>
-        <p>
-          We provide professional installation and support for networking, smart
-          tech, and AV. Quotes are estimates and may change with site conditions
-          and materials.
-        </p>
+          <h2 className="pt-4 font-display text-xl font-semibold text-brand-navy">1. Services</h2>
+          <p>
+            We provide low-voltage installation and maintenance services including security cameras,
+            structured cabling, smart home devices, access control, and TV mounting. Quotes are
+            estimates and may change based on site conditions and materials.
+          </p>
 
-        <h2 className="text-xl font-semibold mt-6">2. Website Use</h2>
-        <p>Don’t misuse or disrupt the site or violate any laws.</p>
+          <h2 className="pt-4 font-display text-xl font-semibold text-brand-navy">2. Website use</h2>
+          <p>
+            Do not misuse or disrupt the site or violate any laws while using it.
+          </p>
 
-        <h2 className="text-xl font-semibold mt-6">3. Quotes & Appointments</h2>
-        <p>
-          Requests made via forms are non-binding until confirmed by a Hudson
-          Smart Installs representative.
-        </p>
+          <h2 className="pt-4 font-display text-xl font-semibold text-brand-navy">3. Quotes and appointments</h2>
+          <p>
+            Requests made through forms are not binding until confirmed by a Hudson Smart Installs
+            representative.
+          </p>
 
-        <h2 className="text-xl font-semibold mt-6">4. Liability</h2>
-        <p>
-          We are not liable for indirect or incidental damages from use of the
-          site or services, to the extent allowed by law.
-        </p>
+          <h2 className="pt-4 font-display text-xl font-semibold text-brand-navy">4. Liability</h2>
+          <p>
+            We are not liable for indirect or incidental damages arising from use of the site or
+            services, to the extent allowed by law.
+          </p>
 
-        <h2 className="text-xl font-semibold mt-6">5. Intellectual Property</h2>
-        <p>
-          Site content (logo, text, designs) belongs to Hudson Smart Installs.
-          Don’t copy without written permission.
-        </p>
+          <h2 className="pt-4 font-display text-xl font-semibold text-brand-navy">5. Intellectual property</h2>
+          <p>
+            Site content (logo, text, designs) belongs to Hudson Smart Installs. Do not copy without
+            written permission.
+          </p>
 
-        <h2 className="text-xl font-semibold mt-6">6. Contact</h2>
-        <p>
-          Questions?{" "}
-          <a className="text-brand-orange underline" href="mailto:info@hudsonsmartinstalls.com">
-            info@hudsonsmartinstalls.com
-          </a>
-          . Jersey City, NJ.
-        </p>
-      </section>
-    </main>
+          <h2 className="pt-4 font-display text-xl font-semibold text-brand-navy">6. Contact</h2>
+          <p>
+            Questions? Email
+            {" "}
+            <a
+              className="font-semibold text-brand-orange underline"
+              href="mailto:info@hudsonsmartinstalls.com"
+            >
+              info@hudsonsmartinstalls.com
+            </a>
+            . Jersey City, NJ.
+          </p>
+        </section>
+      </main>
+    </div>
   );
 }
