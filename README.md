@@ -20,6 +20,20 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Google Reviews in Testimonials
+
+The testimonials page can show live Google reviews from your Business Profile.
+
+1. Create a Google Maps Platform API key with **Places API** enabled.
+2. Add these variables to `.env.local`:
+
+```bash
+GOOGLE_PLACES_API_KEY=your_api_key_here
+GOOGLE_PLACE_ID=ChIJY_V_ThTzww0RrwycL08szrQ
+```
+
+If `GOOGLE_PLACES_API_KEY` is not set or the request fails, the page automatically falls back to local sample testimonials.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

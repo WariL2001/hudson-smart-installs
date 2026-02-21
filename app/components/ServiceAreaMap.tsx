@@ -330,7 +330,7 @@ export default function ServiceAreaMap() {
 
   // IMPORTANT: parent sets the height; we use h-full here.
   return (
-    <div className="relative z-0"> {/* keeps the whole map stack under the navbar */}
+    <div className="relative z-0 h-full"> {/* keeps the whole map stack under the navbar */}
       <div
         ref={containerRef}
         className="h-full w-full rounded-2xl overflow-hidden shadow-sm border border-brand-navy/10 z-0"

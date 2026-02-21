@@ -28,8 +28,11 @@ export default function ContactPage() {
                 clear plan and timeline.
               </p>
               <div className="flex flex-wrap gap-3">
-                <a href="tel:+12012757451" className="btn btn-primary">
-                  Call (201) 275-7451
+                <a href="tel:+15513047001" className="btn btn-primary">
+                  Call (551) 304-7001
+                </a>
+                <a href="sms:+12012757451" className="btn btn-outline-dark">
+                  Send a text message
                 </a>
                 <a
                   href="https://wa.me/12012757451"
@@ -73,8 +76,11 @@ export default function ContactPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-500">Direct contact</p>
             <h3 className="mt-2 font-display text-2xl font-semibold text-brand-navy">Get in touch</h3>
             <div className="mt-4 space-y-2 text-sm text-ink-700">
-              <a href="tel:+12012757451" className="block hover:text-brand-orange">
-                Call (201) 275-7451
+              <a href="tel:+15513047001" className="block hover:text-brand-orange">
+                Call (551) 304-7001
+              </a>
+              <a href="sms:+12012757451" className="block hover:text-brand-orange">
+                (201) 275-7451
               </a>
               <a href="mailto:info@hudsonsmartinstalls.com" className="block hover:text-brand-orange">
                 info@hudsonsmartinstalls.com

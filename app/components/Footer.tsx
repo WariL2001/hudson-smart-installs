@@ -33,7 +33,8 @@ export default function Footer() {
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">Contact</p>
           <div className="mt-4 space-y-2 text-sm text-ink-700">
-            <a href="tel:+12012757451" className="block hover:text-brand-orange">Call (201) 275-7451</a>
+            <a href="tel:+15513047001" className="block hover:text-brand-orange">Call (551) 304-7001</a>
+            <a href="sms:+12012757451" className="block hover:text-brand-orange">Send a text message</a>
             <a href="mailto:info@hudsonsmartinstalls.com" className="block hover:text-brand-orange">
               info@hudsonsmartinstalls.com
             </a>

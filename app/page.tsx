@@ -142,8 +142,8 @@ export default function Page() {
                 <Link href="/contact" className="btn btn-primary">
                   Request a Free Quote
                 </Link>
-                <a href="tel:+12012757451" className="btn btn-outline-dark">
-                  Call Now: (201) 275-7451
+                <a href="tel:+15513047001" className="btn btn-outline-dark">
+                  Call Now: (551) 304-7001
                 </a>
               </div>
 
@@ -383,7 +383,7 @@ export default function Page() {
                 We confirm scope, schedule a visit, and arrive with the right hardware to avoid delays.
               </p>
               <div className="mt-4 flex flex-wrap gap-3">
-                <a href="tel:+12012757451" className="btn btn-primary">
+                <a href="tel:+15513047001" className="btn btn-primary">
                   Call now
                 </a>
                 <Link href="/contact" className="btn btn-ghost">
