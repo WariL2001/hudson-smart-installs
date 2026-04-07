@@ -118,9 +118,44 @@ const gallery = [
   },
 ];
 
+const stats = [
+  {
+    label: "Response",
+    value: "Within 24h",
+    icon: (
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+    ),
+  },
+  {
+    label: "Est.",
+    value: "2024",
+    icon: (
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+      </svg>
+    ),
+  },
+  {
+    label: "Rating",
+    value: "5.0 Google",
+    icon: (
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+        <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+      </svg>
+    ),
+  },
+];
+
 export default function Page() {
   return (
     <div className="bg-brand-cream text-ink-900">
+      {/* ── HERO ── */}
       <section className="hero-surface">
         <div className="hero-grid" aria-hidden />
         <div className="hero-orb a" aria-hidden />
@@ -130,10 +165,10 @@ export default function Page() {
           <div className="grid gap-12 md:grid-cols-[1.1fr_0.9fr] md:items-start">
             <div className="space-y-6">
               <span className="tag-pill">Low-voltage installations</span>
-              <h1 className="font-display text-4xl font-semibold leading-tight text-brand-navy md:text-6xl">
+              <h1 className="font-display text-4xl font-semibold leading-tight text-white md:text-6xl">
                 Low-Voltage Tech Installations Done Right in North Jersey
               </h1>
-              <p className="text-lg text-ink-700">
+              <p className="text-lg text-white/80">
                 Professional installation of security cameras, structured cabling, smart home devices,
                 access control, and TV mounting for homeowners and small businesses.
               </p>
@@ -142,30 +177,29 @@ export default function Page() {
                 <Link href="/contact" className="btn btn-primary">
                   Request a Free Quote
                 </Link>
-                <a href="tel:+15513047001" className="btn btn-outline-dark">
+                <a href="tel:+15513047001" className="btn btn-ghost">
                   Call Now: (551) 304-7001
                 </a>
               </div>
 
               <div className="grid gap-3 sm:grid-cols-3">
-                {[
-                  { label: "Response", value: "Within 24h" },
-                  { label: "Since", value: "2024" },
-                  { label: "Rating", value: "5.0 Google" },
-                ].map((item) => (
+                {stats.map((item) => (
                   <div
                     key={item.label}
-                    className="rounded-2xl bg-white/90 px-4 py-3 text-sm shadow-sm ring-1 ring-brand-navy/10"
+                    className="rounded-2xl bg-white/10 backdrop-blur-sm px-4 py-3 text-sm ring-1 ring-white/15"
                   >
-                    <p className="text-xs uppercase tracking-[0.18em] text-ink-500">{item.label}</p>
-                    <p className="mt-1 text-lg font-semibold text-brand-navy">{item.value}</p>
+                    <div className="flex items-center gap-2 text-brand-orange">
+                      {item.icon}
+                      <p className="text-xs uppercase tracking-[0.18em] text-white/60">{item.label}</p>
+                    </div>
+                    <p className="mt-1 text-lg font-semibold text-white">{item.value}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="space-y-6">
-              <div className="relative h-[320px] overflow-hidden rounded-3xl shadow-lg ring-1 ring-brand-navy/10 md:h-[420px]">
+              <div className="relative h-[320px] overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/10 md:h-[420px]">
                 <Image
                   src="/images/hs1.png"
                   alt="Technician arriving for a low-voltage installation"
@@ -197,16 +231,16 @@ export default function Page() {
                 <ul className="mt-4 space-y-3 text-sm text-ink-700">
                   {services.slice(0, 4).map((service) => (
                     <li key={service.id} className="flex items-start gap-3">
-                      <span className="mt-1 h-2 w-2 rounded-full bg-brand-orange" aria-hidden />
+                      <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-orange" aria-hidden />
                       <span>{service.title}</span>
                     </li>
                   ))}
                   <li className="flex items-start gap-3">
-                    <span className="mt-1 h-2 w-2 rounded-full bg-brand-orange" aria-hidden />
+                    <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-orange" aria-hidden />
                     <span>TV mounting and cable management</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="mt-1 h-2 w-2 rounded-full bg-brand-orange" aria-hidden />
+                    <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-orange" aria-hidden />
                     <span>Low-voltage electrical fixes and tidy-ups</span>
                   </li>
                 </ul>
@@ -219,6 +253,7 @@ export default function Page() {
         </div>
       </section>
 
+      {/* ── SERVICES ── */}
       <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -232,29 +267,33 @@ export default function Page() {
           </Link>
         </div>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => (
             <Link
               key={service.id}
               href={`/services#${service.id}`}
-              className="card-surface bg-white p-6 transition hover:-translate-y-1 hover:shadow-md reveal-up"
-              style={{ animationDelay: `${index * 80}ms` }}
+              className="card-surface bg-white p-6 hover:-translate-y-1 hover:shadow-xl hover:border-brand-orange/20 reveal-up"
+              style={{ animationDelay: `${index * 70}ms` }}
             >
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-mist/70 text-brand-orange">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-mist text-brand-orange">
                   <Image src={service.image} alt={service.imageAlt} width={28} height={28} />
                 </div>
-                <h3 className="font-display text-xl font-semibold text-brand-navy">{service.title}</h3>
+                <h3 className="font-display text-lg font-semibold text-brand-navy leading-snug">{service.title}</h3>
               </div>
-              <p className="mt-2 text-sm text-ink-700">{service.description}</p>
-              <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-orange">
+              <p className="mt-3 text-sm text-ink-700">{service.description}</p>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-orange">
                 Learn more
+                <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </span>
             </Link>
           ))}
         </div>
       </section>
 
+      {/* ── WHY US ── */}
       <section className="bg-brand-mist/70">
         <div className="mx-auto max-w-6xl px-4 py-16">
           <div className="grid gap-8 md:grid-cols-[1fr_1.1fr] md:items-start">
@@ -272,11 +311,14 @@ export default function Page() {
               {highlights.map((item, index) => (
                 <div
                   key={item.title}
-                  className="card-surface bg-white p-4 reveal-up"
+                  className="card-surface bg-white p-5 reveal-up relative overflow-hidden"
                   style={{ animationDelay: `${index * 90}ms` }}
                 >
-                  <h3 className="text-sm font-semibold text-brand-navy">{item.title}</h3>
-                  <p className="mt-2 text-sm text-ink-700">{item.body}</p>
+                  <span className="absolute right-3 top-1 font-display text-6xl font-bold leading-none text-brand-mist select-none pointer-events-none">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="relative text-sm font-semibold text-brand-navy">{item.title}</h3>
+                  <p className="relative mt-2 text-sm text-ink-700">{item.body}</p>
                 </div>
               ))}
             </div>
@@ -284,6 +326,7 @@ export default function Page() {
         </div>
       </section>
 
+      {/* ── GALLERY ── */}
       <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -297,7 +340,7 @@ export default function Page() {
           </Link>
         </div>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
           {gallery.map((item) => (
             <div
               key={item.title}
@@ -307,10 +350,10 @@ export default function Page() {
                 src={item.src}
                 alt={item.title}
                 fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover transition-transform duration-500 hover:scale-105"
+                sizes="(min-width: 1024px) 33vw, 100vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/70 via-brand-navy/10 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/75 via-brand-navy/10 to-transparent" />
               <div className="absolute bottom-4 left-4 text-white">
                 <p className="text-sm font-semibold">{item.title}</p>
                 <p className="text-xs text-white/80">{item.body}</p>
@@ -320,7 +363,8 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-16">
+      {/* ── RESIDENTIAL / BUSINESS ── */}
+      <section className="mx-auto max-w-6xl px-4 pb-16">
         <div className="grid gap-6 md:grid-cols-2">
           <div className="card-surface bg-white p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-500">Residential</p>
@@ -332,9 +376,12 @@ export default function Page() {
               Your home stays tidy and your devices stay connected.
             </p>
             <ul className="mt-4 space-y-2 text-sm text-ink-700">
-              <li>Clean cable runs and hidden wiring options</li>
-              <li>Simple controls for family and guests</li>
-              <li>Walkthrough before we leave</li>
+              {["Clean cable runs and hidden wiring options", "Simple controls for family and guests", "Walkthrough before we leave"].map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange" aria-hidden />
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -348,19 +395,23 @@ export default function Page() {
               keep teams productive.
             </p>
             <ul className="mt-4 space-y-2 text-sm text-ink-700">
-              <li>Cat6 and fiber runs with patch panels</li>
-              <li>Access control for doors and entry points</li>
-              <li>Neat racks and labeled terminations</li>
+              {["Cat6 and fiber runs with patch panels", "Access control for doors and entry points", "Neat racks and labeled terminations"].map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange" aria-hidden />
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
       </section>
 
+      {/* ── SERVICE AREAS ── */}
       <section className="bg-brand-navy text-white">
         <div className="mx-auto max-w-6xl px-4 py-16">
           <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-center">
             <div className="space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">Service areas</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">Service areas</p>
               <h2 className="font-display text-3xl font-semibold md:text-4xl">
                 Serving North Jersey homes and small businesses
               </h2>
@@ -368,7 +419,7 @@ export default function Page() {
                 Based in Jersey City, we regularly serve Hudson, Essex, and Bergen counties. If you do
                 not see your town listed, ask us anyway.
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white/60">
                 Jersey City, Hoboken, Bayonne, Union City, Newark, Bloomfield, Clifton, Hackensack,
                 Fort Lee, and nearby towns.
               </p>
@@ -376,8 +427,8 @@ export default function Page() {
                 View full service area list
               </Link>
             </div>
-            <div className="card-surface bg-white/10 p-6 text-white">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">Response time</p>
+            <div className="card-surface bg-white/10 border-white/15 p-6 text-white shadow-none">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">Response time</p>
               <p className="mt-2 font-display text-2xl font-semibold">Calls returned within 24 hours</p>
               <p className="mt-2 text-sm text-white/75">
                 We confirm scope, schedule a visit, and arrive with the right hardware to avoid delays.
@@ -395,6 +446,7 @@ export default function Page() {
         </div>
       </section>
 
+      {/* ── TESTIMONIALS ── */}
       <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -415,15 +467,23 @@ export default function Page() {
               className="card-surface bg-white p-5 reveal-up"
               style={{ animationDelay: `${index * 90}ms` }}
             >
-              <p className="text-sm text-ink-700">&ldquo;{item.quote}&rdquo;</p>
+              <div className="flex gap-0.5">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <svg key={i} className="h-4 w-4 fill-brand-orange" viewBox="0 0 24 24" aria-hidden>
+                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+                  </svg>
+                ))}
+              </div>
+              <p className="mt-3 text-sm text-ink-700">&ldquo;{item.quote}&rdquo;</p>
               <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-ink-500">
-                {item.name} - {item.location}
+                {item.name} — {item.location}
               </p>
             </div>
           ))}
         </div>
       </section>
 
+      {/* ── CONTACT FORM ── */}
       <section className="bg-brand-mist/70">
         <div className="mx-auto max-w-6xl px-4 py-16">
           <div className="grid gap-10 md:grid-cols-[1fr_1.1fr] md:items-start">
@@ -436,11 +496,33 @@ export default function Page() {
                 Share the location, the equipment you have, and what you want to improve. We will reply
                 with a clear plan and timing options.
               </p>
-              <ul className="mt-4 space-y-2 text-sm text-ink-700">
-                <li>Low-voltage installation near me for homes or offices</li>
-                <li>Structured cabling in New Jersey with tidy patch panels</li>
-                <li>Home security camera setup in North Jersey</li>
-              </ul>
+              <div className="mt-2 space-y-3">
+                <div className="flex items-center gap-3 text-sm text-ink-700">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange">
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+                    </svg>
+                  </span>
+                  <span>We reply within 24 hours</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-ink-700">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange">
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                  </span>
+                  <span>Serving Hudson, Essex, and Bergen counties</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-ink-700">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange">
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <span>Free, no-obligation quotes</span>
+                </div>
+              </div>
             </div>
 
             <div className="card-surface bg-white p-6">

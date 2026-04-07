@@ -1,12 +1,21 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
     <footer className="border-t border-brand-navy/10 bg-brand-cream">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-[1.2fr_0.9fr_0.9fr]">
         <div>
-          <p className="font-display text-xl font-semibold text-brand-navy">Hudson Smart Installs</p>
-          <p className="mt-3 text-sm text-ink-700">
+          <Link href="/" aria-label="Hudson Smart Installs Home">
+            <Image
+              src="/logohsi.png"
+              alt="Hudson Smart Installs"
+              width={180}
+              height={62}
+              className="h-10 w-auto object-contain"
+            />
+          </Link>
+          <p className="mt-4 text-sm text-ink-700">
             Low-voltage installation and maintenance for homes and small businesses in North Jersey.
             We deliver neat, labeled work and clear walkthroughs.
           </p>

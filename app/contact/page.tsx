@@ -20,10 +20,10 @@ export default function ContactPage() {
           <div className="grid gap-10 md:grid-cols-[1.05fr_0.95fr] md:items-start">
             <div className="space-y-5">
               <span className="tag-pill">Contact</span>
-              <h1 className="font-display text-4xl font-semibold text-brand-navy md:text-5xl">
+              <h1 className="font-display text-4xl font-semibold text-white md:text-5xl">
                 Request a free quote for your low-voltage project
               </h1>
-              <p className="text-lg text-ink-700">
+              <p className="text-lg text-white/80">
                 Tell us what you need installed or repaired and we will reply within 24 hours with a
                 clear plan and timeline.
               </p>
@@ -31,14 +31,14 @@ export default function ContactPage() {
                 <a href="tel:+15513047001" className="btn btn-primary">
                   Call (551) 304-7001
                 </a>
-                <a href="sms:+12012757451" className="btn btn-outline-dark">
+                <a href="sms:+12012757451" className="btn btn-ghost">
                   Send a text message
                 </a>
                 <a
                   href="https://wa.me/12012757451"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-outline-dark"
+                  className="btn btn-ghost"
                 >
                   Message on WhatsApp
                 </a>

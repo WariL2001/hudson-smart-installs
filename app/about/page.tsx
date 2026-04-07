@@ -39,16 +39,16 @@ export default function AboutPage() {
           <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
             <div className="space-y-5">
               <span className="tag-pill">About us</span>
-              <h1 className="font-display text-4xl font-semibold text-brand-navy md:text-5xl">
+              <h1 className="font-display text-4xl font-semibold text-white md:text-5xl">
                 Local low-voltage specialists you can trust
               </h1>
-              <p className="text-lg text-ink-700">
+              <p className="text-lg text-white/80">
                 Hudson Smart Installs was founded in 2024 to make technology installations easy and
                 reliable for the North Jersey community. We focus on low-voltage systems that keep
                 homes and small businesses safe, connected, and organized.
               </p>
               <div className="flex flex-wrap gap-3">
-                <Link href="/services" className="btn btn-outline-dark">
+                <Link href="/services" className="btn btn-ghost">
                   View services
                 </Link>
                 <Link href="/contact" className="btn btn-primary">
@@ -137,10 +137,12 @@ export default function AboutPage() {
             <div className="card-surface bg-white p-6 text-sm text-ink-700">
               <p className="font-semibold text-brand-navy">Our promise</p>
               <ul className="mt-3 space-y-2">
-                <li>On-time arrival with the right tools</li>
-                <li>Clean, organized wiring</li>
-                <li>Training on how to use your system</li>
-                <li>Follow-up support when needed</li>
+                {["On-time arrival with the right tools", "Clean, organized wiring", "Training on how to use your system", "Follow-up support when needed"].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange" aria-hidden />
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

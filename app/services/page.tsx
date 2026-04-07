@@ -119,10 +119,10 @@ export default function ServicesPage() {
           <div className="grid gap-10 md:grid-cols-[1.15fr_0.85fr] md:items-center">
             <div className="space-y-5">
               <span className="tag-pill">Low-voltage services</span>
-              <h1 className="font-display text-4xl font-semibold text-brand-navy md:text-5xl">
+              <h1 className="font-display text-4xl font-semibold text-white md:text-5xl">
                 Low-Voltage Installation Services in North Jersey
               </h1>
-              <p className="text-lg text-ink-700">
+              <p className="text-lg text-white/80">
                 We handle everything from security cameras and structured cabling to smart home setup,
                 access control, and TV mounting. If you are searching for low voltage installation near
                 me, we bring a clean, professional finish to every job.
@@ -131,7 +131,7 @@ export default function ServicesPage() {
                 <Link href="/contact" className="btn btn-primary">
                   Request a Free Quote
                 </Link>
-                <a href="tel:+15513047001" className="btn btn-outline-dark">
+                <a href="tel:+15513047001" className="btn btn-ghost">
                   Call (551) 304-7001
                 </a>
               </div>

@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "leaflet/dist/leaflet.css";
 
-
-
 /* ===== Brand tokens (Tailwind v4) ===== */
 @theme {
   --color-brand-navy:   #0B1C2B;
@@ -10,43 +8,34 @@
   --color-brand-cream:  #F6F1E9;
   --color-brand-mist:   #E7EEF2;
   --color-brand-slate:  #1A3B4F;
-
-  /* optional neutrals tuned for accessibility on brand surfaces */
-  --color-ink-900: #0B1520;   /* headings on light */
-  --color-ink-700: #273646;   /* body on light */
-  --color-ink-500: #536474;   /* secondary text on light */
+  --color-ink-900: #0B1520;
+  --color-ink-700: #273646;
+  --color-ink-500: #536474;
 }
 
-/* ===== Base resets & helpers ===== */
+/* ===== Base ===== */
 html { scroll-behavior: smooth; }
-body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
 body {
-  background-color: var(--color-brand-cream) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-brand-cream);
   color: var(--color-ink-900);
   font-family: var(--font-sans);
   letter-spacing: 0.01em;
 }
-
 img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
 
-
-
-
-/* Visible focus for keyboard users */
 :focus-visible {
   outline: 2px solid var(--color-brand-orange);
   outline-offset: 2px;
 }
 
-/* Motion respect */
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none!important; transition: none!important; scroll-behavior: auto!important; }
-  .reveal-up,
-  .reveal-fade { opacity: 1 !important; }
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .reveal-up, .reveal-fade { opacity: 1 !important; }
 }
 
-/* Skip link */
+/* ===== Skip link ===== */
 .skip-link {
   position: absolute; left: 0; top: -40px;
   background: var(--color-brand-orange); color: white;
@@ -54,241 +43,100 @@ img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
 }
 .skip-link:focus-visible { top: .5rem; left: .5rem; z-index: 50; }
 
-/* Card surface - readable on gradient */
-.card-surface {
-  @apply bg-white/95 backdrop-blur-sm shadow-sm rounded-2xl border border-brand-navy/10;
-}
-
-/* Primary/Secondary buttons */
-.btn {
-  @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 font-semibold select-none transition;
-}
-.btn-primary {
-  @apply bg-brand-orange text-white shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0;
-}
-.btn-ghost {
-  @apply border border-white/30 text-white hover:bg-white/10;
-}
-.btn-outline-dark {
-  @apply border border-brand-navy/20 text-brand-navy hover:bg-white;
-}
-
-/* --- Keep Leaflet map layers below navbar --- */
-.leaflet-container {
-  z-index: 0 !important;
-}
-
-.leaflet-top,
-.leaflet-bottom {
-  z-index: 500 !important; /* controls above tiles, still under navbar */
-}
-
-/* === HUDSON SMART INSTALLS - TECH LINES HERO === */
-
-.hero-tech-shell {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-
-/* SVG container behind the logo */
-.hero-tech-lines {
-  position: absolute;
-  inset: -5%;        /* acercamos las lineas al logo */
-  opacity: 0.85;     /* mucho mas visible en fondo claro */
-  pointer-events: none;
-}
-
-/* Animate the circuit strokes */
-.hero-tech-lines path {
-  stroke: #f97316;   /* Hudson orange */
-  stroke-width: 2.2;
-  fill: transparent;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 160;
-  animation: tech-lines-draw 10s ease-in-out infinite alternate;
-}
-
-/* Slight glow around the lines */
-.hero-tech-lines path.glow {
-  stroke-width: 4;
-  stroke: rgba(249, 115, 22, 0.45);
-  filter: blur(3px);
-}
-
-/* Subtle motion for the logo only */
-.logo-drift { /* animation removed for a static logo */ }
-
-/* Animated underline for the desktop nav */
-.nav-wave {
-  position: relative;
-}
-.nav-wave::after {
-  content: "";
-  position: absolute;
-  left: -8px;
-  right: -8px;
-  bottom: -8px;
-  height: 3px;
-  background: linear-gradient(90deg, rgba(11, 28, 43, 0.12), rgba(255, 122, 0, 0.6), rgba(11, 28, 43, 0.12));
-  background-size: 200% 100%;
-  border-radius: 999px;
-  animation: nav-wave 10s ease-in-out infinite;
-}
-@keyframes nav-wave {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes tech-lines-draw {
-  0% {
-    stroke-dashoffset: 160;
-    opacity: 0.5;
-  }
-  50% {
-    stroke-dashoffset: 80;
-    opacity: 0.95;
-  }
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-}
-
-/* Soft gradient mesh for hero backgrounds (calmer than waves) */
-.mesh-shell {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(120% 80% at 50% 0%, rgba(255, 247, 235, 0.8), rgba(255, 247, 235, 0.2));
-}
-.mesh {
-  position: absolute;
-  filter: blur(70px);
-  opacity: 0.45;
-  mix-blend-mode: multiply;
-}
-.mesh-a {
-  width: 70%;
-  height: 60%;
-  top: -10%;
-  left: -15%;
-  background: radial-gradient(circle at 40% 40%, rgba(13, 27, 42, 0.12), transparent 60%);
-}
-.mesh-b {
-  width: 65%;
-  height: 55%;
-  bottom: -8%;
-  right: -18%;
-  background: radial-gradient(circle at 60% 50%, rgba(255, 122, 0, 0.12), transparent 65%);
-}
-.mesh-c {
-  width: 80%;
-  height: 60%;
-  top: 30%;
-  left: 20%;
-  background: radial-gradient(circle at 50% 50%, rgba(13, 27, 42, 0.08), transparent 70%);
-}
-
-/* ===== New redesign utilities ===== */
+/* ===== Font display ===== */
 .font-display {
   font-family: var(--font-display);
   letter-spacing: -0.02em;
 }
 
+/* ===== Card surface ===== */
+.card-surface {
+  @apply bg-white shadow-md rounded-2xl border border-brand-navy/10 transition-all duration-200;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold select-none transition-all duration-200;
+}
+.btn-primary {
+  @apply bg-brand-orange text-white shadow-md hover:shadow-xl hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:shadow-md;
+}
+.btn-ghost {
+  @apply border border-white/30 text-white hover:bg-white/10 hover:border-white/50;
+}
+.btn-outline-dark {
+  @apply border border-brand-navy/20 bg-white/70 text-brand-navy hover:bg-white hover:border-brand-navy/40 hover:shadow-sm;
+}
+
+/* ===== Leaflet ===== */
+.leaflet-container { z-index: 0 !important; }
+.leaflet-top, .leaflet-bottom { z-index: 500 !important; }
+
+/* ===== Hero surface — DARK ===== */
 .hero-surface {
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(120% 120% at 85% -10%, rgba(255, 122, 0, 0.2), transparent 60%),
-    radial-gradient(100% 120% at 10% 0%, rgba(26, 59, 79, 0.18), transparent 55%),
-    linear-gradient(180deg, #f7f3ec 0%, #f1ede4 100%);
+    radial-gradient(ellipse 80% 60% at 88% -10%, rgba(255, 122, 0, 0.30), transparent 55%),
+    radial-gradient(ellipse 60% 70% at -5% 70%, rgba(26, 59, 79, 0.55), transparent 55%),
+    linear-gradient(160deg, #0f2438 0%, #0B1C2B 55%, #091826 100%);
 }
 
 .hero-grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, rgba(11, 28, 43, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(11, 28, 43, 0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
   background-size: 56px 56px;
-  mask-image: radial-gradient(circle at 15% 10%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0) 70%);
-  opacity: 0.5;
+  mask-image: radial-gradient(ellipse 90% 90% at 18% 18%, rgba(0,0,0,1), rgba(0,0,0,0) 72%);
   pointer-events: none;
 }
 
 .hero-orb {
   position: absolute;
   border-radius: 999px;
-  filter: blur(40px);
-  opacity: 0.55;
+  filter: blur(65px);
   pointer-events: none;
 }
-
 .hero-orb.a {
-  width: 340px;
-  height: 340px;
-  top: -140px;
-  right: -80px;
-  background: rgba(255, 122, 0, 0.35);
+  width: 440px; height: 440px;
+  top: -170px; right: -110px;
+  background: rgba(255, 122, 0, 0.32);
   animation: float-slow 16s ease-in-out infinite;
 }
-
 .hero-orb.b {
-  width: 260px;
-  height: 260px;
-  bottom: -140px;
-  left: -60px;
-  background: rgba(26, 59, 79, 0.28);
+  width: 320px; height: 320px;
+  bottom: -130px; left: -80px;
+  background: rgba(26, 59, 79, 0.70);
   animation: float-slow 18s ease-in-out infinite reverse;
 }
 
+/* ===== Tag pill (on dark hero) ===== */
 .tag-pill {
-  @apply inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-brand-navy shadow-sm ring-1 ring-brand-navy/10;
+  @apply inline-flex items-center gap-2 rounded-full bg-brand-orange/15 border border-brand-orange/35 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-brand-orange;
 }
 
+/* ===== Reveal animations ===== */
 .reveal-up {
   opacity: 0;
-  animation: fade-up 0.9s ease forwards;
+  animation: fade-up 0.7s ease forwards;
 }
-
 .reveal-fade {
   opacity: 0;
-  animation: fade-in 1s ease forwards;
+  animation: fade-in 0.8s ease forwards;
 }
 
 @keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
-
 @keyframes float-slow {
-  0% {
-    transform: translateY(0) translateX(0);
-  }
-  50% {
-    transform: translateY(12px) translateX(-8px);
-  }
-  100% {
-    transform: translateY(0) translateX(0);
-  }
+  0%   { transform: translateY(0) translateX(0); }
+  50%  { transform: translateY(14px) translateX(-10px); }
+  100% { transform: translateY(0) translateX(0); }
 }

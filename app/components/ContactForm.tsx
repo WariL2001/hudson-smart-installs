@@ -49,7 +49,7 @@ export default function ContactForm() {
           name="name"
           type="text"
           required
-          className="w-full rounded-md border border-brand-navy/15 bg-white px-3 py-2 text-ink-900 placeholder-ink-500 outline-none focus:ring-2 focus:ring-brand-orange"
+          className="w-full rounded-xl border border-brand-navy/15 bg-brand-cream/40 px-4 py-3 text-ink-900 placeholder-ink-500 outline-none transition focus:border-brand-orange/50 focus:bg-white focus:ring-2 focus:ring-brand-orange/20"
           placeholder="Your name"
         />
       </div>
@@ -63,7 +63,7 @@ export default function ContactForm() {
           name="email"
           type="email"
           required
-          className="w-full rounded-md border border-brand-navy/15 bg-white px-3 py-2 text-ink-900 placeholder-ink-500 outline-none focus:ring-2 focus:ring-brand-orange"
+          className="w-full rounded-xl border border-brand-navy/15 bg-brand-cream/40 px-4 py-3 text-ink-900 placeholder-ink-500 outline-none transition focus:border-brand-orange/50 focus:bg-white focus:ring-2 focus:ring-brand-orange/20"
           placeholder="you@example.com"
         />
       </div>
@@ -76,7 +76,7 @@ export default function ContactForm() {
           id="phone"
           name="phone"
           type="tel"
-          className="w-full rounded-md border border-brand-navy/15 bg-white px-3 py-2 text-ink-900 placeholder-ink-500 outline-none focus:ring-2 focus:ring-brand-orange"
+          className="w-full rounded-xl border border-brand-navy/15 bg-brand-cream/40 px-4 py-3 text-ink-900 placeholder-ink-500 outline-none transition focus:border-brand-orange/50 focus:bg-white focus:ring-2 focus:ring-brand-orange/20"
           placeholder="(201) 555-0123"
         />
       </div>
@@ -90,7 +90,7 @@ export default function ContactForm() {
           name="details"                 // <-- antes "message"
           required
           rows={5}
-          className="w-full rounded-md border border-brand-navy/15 bg-white px-3 py-2 text-ink-900 placeholder-ink-500 outline-none focus:ring-2 focus:ring-brand-orange"
+          className="w-full rounded-xl border border-brand-navy/15 bg-brand-cream/40 px-4 py-3 text-ink-900 placeholder-ink-500 outline-none transition focus:border-brand-orange/50 focus:bg-white focus:ring-2 focus:ring-brand-orange/20"
           placeholder="Tell us what you need help with..."
         />
       </div>

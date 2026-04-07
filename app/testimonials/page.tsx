@@ -215,10 +215,10 @@ export default async function TestimonialsPage() {
           <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
             <div className="space-y-5">
               <span className="tag-pill">Testimonials</span>
-              <h1 className="font-display text-4xl font-semibold text-brand-navy md:text-5xl">
+              <h1 className="font-display text-4xl font-semibold text-white md:text-5xl">
                 Clients rate us 5.0 on Google
               </h1>
-              <p className="text-lg text-ink-700">
+              <p className="text-lg text-white/80">
                 Homeowners and small businesses across North Jersey trust us for clean installs and
                 clear communication.
               </p>
@@ -230,7 +230,7 @@ export default async function TestimonialsPage() {
                   href={GOOGLE_REVIEW_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-outline-dark"
+                  className="btn btn-ghost"
                 >
                   Leave a Google review
                 </a>
@@ -302,9 +302,13 @@ export default async function TestimonialsPage() {
                 ) : null}
               </div>
 
-              <p className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand-orange">
-                Rating {item.rating.toFixed(1)} / 5
-              </p>
+              <div className="mt-3 flex gap-0.5">
+                {Array.from({ length: item.rating }, (_, i) => (
+                  <svg key={i} className="h-4 w-4 fill-brand-orange" viewBox="0 0 24 24" aria-hidden>
+                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+                  </svg>
+                ))}
+              </div>
               <p className="mt-3 text-sm text-ink-700">&ldquo;{item.text}&rdquo;</p>
 
               {item.googleMapsUri ? (

@@ -35,10 +35,10 @@ export default function ServiceAreasPage() {
           <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
             <div className="space-y-5">
               <span className="tag-pill">Service areas</span>
-              <h1 className="font-display text-4xl font-semibold text-brand-navy md:text-5xl">
+              <h1 className="font-display text-4xl font-semibold text-white md:text-5xl">
                 Low-voltage service across North Jersey
               </h1>
-              <p className="text-lg text-ink-700">
+              <p className="text-lg text-white/80">
                 Hudson Smart Installs is based in Jersey City and serves homes and small businesses
                 throughout Hudson, Essex, and Bergen counties. If you are nearby and do not see your
                 town listed, reach out and we will confirm availability.
@@ -47,7 +47,7 @@ export default function ServiceAreasPage() {
                 <Link href="/contact" className="btn btn-primary">
                   Request a Free Quote
                 </Link>
-                <a href="tel:+15513047001" className="btn btn-outline-dark">
+                <a href="tel:+15513047001" className="btn btn-ghost">
                   Call (551) 304-7001
                 </a>
               </div>

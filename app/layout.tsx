@@ -4,6 +4,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import MobileCta from "./components/MobileCta";
 import { Sora, Source_Sans_3 } from "next/font/google";
 
 const sora = Sora({
@@ -112,6 +113,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
 
         <Footer />
+        <MobileCta />
       </body>
     </html>
   );
